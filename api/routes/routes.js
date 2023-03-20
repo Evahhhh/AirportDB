@@ -11,8 +11,11 @@ const {
 
 router.get("/api/documents", async (req, res) => {
   try {
+    console.log("api : get : appel");
     const db = await connect();
+    console.log("api : get : connect");
     const documents = await findDocuments(db, "documents", {});
+    console.log("api : get : findDocuments" + documents);
     res.json(documents);
   } catch (err) {
     console.error(err);
@@ -22,9 +25,12 @@ router.get("/api/documents", async (req, res) => {
 
 router.post("/api/documents", async (req, res) => {
   try {
+    console.log("api : post : appel");
     const db = await connect();
+    console.log("api : post : connect");
     const document = req.body;
     const result = await insertDocument(db, "documents", document);
+    console.log("api : post : inserDocument result" + result);
     res.json(result.ops[0]);
   } catch (err) {
     console.error(err);
@@ -72,7 +78,7 @@ router.post("/api/documents/aggregate", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  res.send("Hello World");
+  res.send("Bienvenue sur l'api AirportDB");
 });
 
 module.exports = router;
