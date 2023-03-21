@@ -1,5 +1,6 @@
-const connect = require("../db");
 var express = require("express");
+const { ObjectId } = require("mongodb");
+const db = require("../db")
 var router = express.Router();
 const {
   findDocuments,
@@ -11,11 +12,7 @@ const {
 
 router.get("/api/documents", async (req, res) => {
   try {
-    console.log("api : get : appel");
-    const db = await connect();
-    console.log("api : get : connect");
-    const documents = await findDocuments(db, "documents", {});
-    console.log("api : get : findDocuments" + documents);
+    const documents = await findDocuments(db, "airport", {});
     res.json(documents);
   } catch (err) {
     console.error(err);
@@ -25,26 +22,21 @@ router.get("/api/documents", async (req, res) => {
 
 router.post("/api/documents", async (req, res) => {
   try {
-    console.log("api : post : appel");
-    const db = await connect();
-    console.log("api : post : connect");
     const document = req.body;
-    const result = await insertDocument(db, "documents", document);
-    console.log("api : post : inserDocument result" + result);
-    res.json(result.ops[0]);
+    const result = await insertDocument(db, "airport", document);
+    res.json(result);
   } catch (err) {
-    console.error(err);
+    console.error("err", err);
     res.status(500).json({ error: "An error occurred" });
   }
 });
 
 router.put("/api/documents/:id", async (req, res) => {
   try {
-    const db = await connect();
     const id = req.params.id;
-    const filter = { _id: ObjectId(id) };
+    const filter = { _id: new ObjectId(id) };
     const update = req.body;
-    const result = await updateDocument(db, "documents", filter, update);
+    const result = await updateDocument(db, "airport", filter, update);
     res.json(result);
   } catch (err) {
     console.error(err);
@@ -54,10 +46,9 @@ router.put("/api/documents/:id", async (req, res) => {
 
 router.delete("/api/documents/:id", async (req, res) => {
   try {
-    const db = await connect();
     const id = req.params.id;
-    const filter = { _id: ObjectId(id) };
-    const result = await deleteDocument(db, "documents", filter);
+    const filter = { _id: new ObjectId(id) };
+    const result = await deleteDocument(db, "airport", filter);
     res.json(result);
   } catch (err) {
     console.error(err);
@@ -67,9 +58,8 @@ router.delete("/api/documents/:id", async (req, res) => {
 
 router.post("/api/documents/aggregate", async (req, res) => {
   try {
-    const db = await connect();
     const pipeline = req.body;
-    const result = await aggregateDocuments(db, "documents", pipeline);
+    const result = await aggregateDocuments(db, "airport", pipeline);
     res.json(result);
   } catch (err) {
     console.error(err);
@@ -82,38 +72,3 @@ router.get("/", async (req, res) => {
 });
 
 module.exports = router;
-
-// APPEL ROUTES REACT
-// import axios from 'axios';
-
-// const API_URL = 'http://localhost:3000/api';
-
-// export const getDocuments = async () => {
-//   const response = await axios.get(`${API_URL}/documents`);
-//   return response.data;
-// };
-
-// export const getDocument = async (id) => {
-//   const response = await axios.get(`${API_URL}/documents/${id}`);
-//   return response.data;
-// };
-
-// export const createDocument = async (document) => {
-//   const response = await axios.post(`${API_URL}/documents`, document);
-//   return response.data;
-// };
-
-// export const updateDocument = async (id, document) => {
-//   const response = await axios.put(`${API_URL}/documents/${id}`, document);
-//   return response.data;
-// };
-
-// export const deleteDocument = async (id) => {
-//   const response = await axios.delete(`${API_URL}/documents/${id}`);
-//   return response.data;
-// };
-
-// export const aggregateDocuments = async (pipeline) => {
-//   const response = await axios.post(`${API_URL}/documents/aggregate`, pipeline);
-//   return response.data;
-// };

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
 import axios from "axios";
+import React, { useState } from "react";
+import { newDoc, upDoc } from "../mock_data";
 
 export default function Test() {
   const [allDocs, setAllDocs] = useState();
@@ -7,53 +8,21 @@ export default function Test() {
   const API_URL = "http://localhost:5150/api";
 
   const getDocuments = async () => {
-    console.log("test : getDocuments : appel");
     const response = await axios.get(`${API_URL}/documents`);
-    console.log("test : getDocuments : axios");
     setAllDocs(response.data);
-    console.log("test : getDocuments : setAllDocs");
-    return response.data;
-  };
-
-  var newDoc = 
-  {
-    "code_IATA": "CDG",
-    "nom": "Aéroport Charles de Gaulle",
-    "ville": "Paris",
-    "pays": "France",
-    "vols": [
-      {
-        "numero_vol": "AF123",
-        "heure_depart": new Date("2023-03-21T10:00:00Z"),
-        "heure_arrivee": new Date("2023-03-21T12:30:00Z"),
-        "aeroport_depart": {
-          "code_IATA": "CDG",
-          "nom": "Aéroport Charles de Gaulle",
-          "ville": "Paris",
-          "pays": "France"
-        },
-        "aeroport_arrivee": {
-          "code_IATA": "HUE",
-          "nom": "Aéroport Hue",
-          "ville": "Hue",
-          "pays": "Vietnam"
-        },
-        "avion": {
-          "modele": "Airbus A380",
-          "capacite": 853,
-          "compagnie_aerienne": "Vietnam airline"
-        }
-      }
-    ]
   };
 
   const insertDocument = async (newDoc) => {
-    console.log("test : insertDocument : appel");
     const response = await axios.post(`${API_URL}/documents`, newDoc);
-    console.log("test : insertDocument : axios");
     setInsertedDoc(response.data);
-    console.log("test : insertDocument : setInserted");
-    return response.data;
+  };
+
+  const deleteDocuments = async (id) => {
+    await axios.delete(`${API_URL}/documents/${id}`);
+  };
+
+  const updateDocuments = async (id) => {
+    await axios.put(`${API_URL}/documents/${id}`, upDoc);
   };
 
   return (
@@ -63,11 +32,29 @@ export default function Test() {
       </div>
       <div>
         {/* ajouter un doc */}
-        <button onClick={() => insertDocument(newDoc)}>Inréer les documents</button>
-        {insertedDoc}
-        {/* afficher tous les docs */}
+        <button onClick={() => insertDocument(newDoc)}>
+          Inréer les documents
+        </button>
+        {insertedDoc && insertedDoc.insertedId}
         <button onClick={() => getDocuments()}>Voir les documents</button>
-        {allDocs}
+
+        <br />
+
+        {/* afficher tous les docs */}
+        {allDocs &&
+          allDocs.map((doc) => {
+            return (
+              <p>
+                {doc._id}: {doc.nom}
+                <button onClick={() => deleteDocuments(doc._id)}>
+                  Supprimer le document
+                </button>
+                <button onClick={() => updateDocuments(doc._id)}>
+                  Modifier le document
+                </button>
+              </p>
+            );
+          })}
       </div>
     </>
   );
