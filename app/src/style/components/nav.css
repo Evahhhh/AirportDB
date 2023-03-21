@@ -1,0 +1,66 @@
+.component{
+    background : white;
+    box-shadow: 1px 1px 15px 5px rgba(0,0,0,0.19);
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-between;
+    border-radius: 0px 0px 20px 20px;
+    padding: 10px;
+}
+
+.logoPart{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.navPart{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.flagPart{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#logo{
+    height: 100px;
+}
+
+#flag{
+    height: 40px;
+    box-shadow: 1px 1px 15px 5px rgba(0,0,0,0.10);
+}
+
+button{
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.flagBtn{
+    padding: 0;}
+
+.navBtn{
+    box-shadow: 1px 1px 15px 5px rgba(0,0,0,0.10);
+    background-color: #394E54;
+    border-radius: 10px;
+}
+
+.navBtnContent{
+    padding : 17px;
+    background-color: #394E54;
+    border-radius: 10px;
+    color : white;
+}
+
+
+.navBtnContent:hover{
+    background-color: #35454D;
+}
