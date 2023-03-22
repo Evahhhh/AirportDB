@@ -29,7 +29,7 @@
 }
 
 #logo{
-    height: 100px;
+    height: 80px;
 }
 
 #flag{
@@ -49,13 +49,13 @@ button{
 
 .navBtn{
     box-shadow: 1px 1px 15px 5px rgba(0,0,0,0.10);
-    background-color: #394E54;
+    background-color: #3C585D;
     border-radius: 10px;
 }
 
 .navBtnContent{
-    padding : 17px;
-    background-color: #394E54;
+    padding : 12px 20px;
+    background-color: #3C585D;
     border-radius: 10px;
     color : white;
 }

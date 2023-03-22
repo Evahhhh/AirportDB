@@ -10,6 +10,9 @@ export default function Nav() {
         <h1> AirportDB </h1>
       </div>
       <div className="navPart">
+        <Link className="navBtn" to="/addairport">
+          <button className="navBtnContent">Ajouter un aéroport</button>
+        </Link>
         <Link className="navBtn" to="/addfly">
           <button className="navBtnContent">Ajouter un vol</button>
         </Link>

@@ -31,6 +31,16 @@ router.post("/api/documents", async (req, res) => {
   }
 });
 
+router.get("/api/airport", async (req,res) => {
+  try {
+    const documents = await findDocuments(db, "airport", req.query);
+    res.json(documents);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "An error occurred" });
+  }
+})
+
 router.put("/api/documents/:id", async (req, res) => {
   try {
     const id = req.params.id;

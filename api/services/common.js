@@ -8,6 +8,7 @@ const insertDocument = async (db, collectionName, document) => {
 };
 
 const findDocuments = async (db, collectionName, filter) => {
+  console.log("filter", filter);
   const collection = db.collection(collectionName);
   const result = await collection.find(filter).toArray();
   console.log(`Found ${result.length} document(s) in ${collectionName}`);
