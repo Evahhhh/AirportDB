@@ -1,10 +1,19 @@
-import React, { useState } from "react";
-
+import React from "react";
+import NewAirportForm from "../components/new_airport_form";
 
 export default function addAirport() {
-    return(
-        <div>
-            <h1>add airport</h1>
-        </div>
-    );
+//   const [insertedDoc, setInsertedDoc] = useState();
+  const API_URL = "http://localhost:5150/api";
+
+//   const insertDocument = async (newDoc) => {
+//     const response = await axios.post(`${API_URL}/documents`, newDoc);
+//     setInsertedDoc(response.data);
+//   };
+
+  return (
+    <div>
+      <h1>add airport</h1>
+      <NewAirportForm />
+    </div>
+  );
 }

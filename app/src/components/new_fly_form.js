@@ -1,46 +1,57 @@
-import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 //formulaire
-export default function NewFlyForm({insertDocument}) {
+export default function NewFlyForm({ insertDocument }) {
+  const API_URL = "http://localhost:5150/api";
   const [numVol, setNumVol] = useState();
   const [heureDep, setHeureDep] = useState();
   const [heureArr, setHeureArr] = useState();
   //aéroport départ
   const [paysDep, setPaysDep] = useState();
-  const [villeDep, setVilleDep] = useState();
   const [airportDep, setAirportDep] = useState();
   //aéroport arrivée
   const [paysArr, setPaysArr] = useState();
-  const [villeArr, setVilleArr] = useState();
   const [airportArr, setAirportArr] = useState();
   //avion
   const [modele, setModele] = useState();
   const [capacite, setCapacite] = useState();
   const [compagnie, setCompagnie] = useState();
 
+  const [airPortDepList, setAirPortDepList] = useState();
+  const [airPortArrList, setAirPortArrList] = useState();
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Do something with the form data
-      // insertDocument(
-      //   {
-      //     numVol: numVol,
-      //     heureDep: heureDep,
-      //     heureArr: heureArr,
-      //     paysDep: paysDep,
-      //     villeDep: villeDep,
-      //     airportDep: airportDep,
-      //     paysArr: paysArr,
-      //     villeArr: villeArr,
-      //     airportArr: airportArr,
-      //     modele: modele,
-      //     capacite: capacite,
-      //     compagnie: compagnie,
-      //   }
-      // )
-    toast.success("Vol ajouté avec succès !");
+    axios
+      .post(`${API_URL}/airport`, {
+        numVol,
+        heureArr,
+        heureDep,
+        airportArr,
+        airportDep,
+        modele,
+        capacite,
+        compagnie,
+      })
+      .then((response) => {
+        setAirPortDepList(response.data);
+        toast.success("Vol ajouté avec succès !");
+      });
   };
+  
+  useEffect(() => {
+    axios.get(`${API_URL}/airport?pays=${paysDep}`).then((response) => {
+      setAirPortDepList(response.data);
+    });
+
+    axios.get(`${API_URL}/airport?pays=${paysArr}`).then((response) => {
+      setAirPortArrList(response.data);
+    });
+  }, [paysArr, paysDep]);
+
   return (
     <>
       <h1>NewFlyForm</h1>
@@ -106,36 +117,25 @@ export default function NewFlyForm({insertDocument}) {
           </label>
         </div>
 
-        <div>
-          <label>
-            Ville :
-            <select
-              value={villeDep}
-              onChange={(e) => setVilleDep(e.target.value)}
-              required
-            >
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
-            </select>
-          </label>
-        </div>
-
-        <div>
-          <label>
-            Nom de l'aéroport :
-            <select
-              value={airportDep}
-              onChange={(e) => setAirportDep(e.target.value)}
-              required
-            >
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
-            </select>
-          </label>
-        </div>
-
+        {paysDep && (
+          <div>
+            <label>
+              Nom de l'aéroport :
+              <select
+                value={airportDep}
+                onChange={(e) => setAirportDep(e.target.value)}
+                required
+              >
+                <option value="">
+                  <i>Veuillez sélectionner une aéroport</i>
+                </option>
+                {airPortDepList.map((arr) => {
+                  return <option value={arr.code_IATA}>{arr.nom}</option>;
+                })}
+              </select>
+            </label>
+          </div>
+        )}
 
         <p>Aéroport d'arrivée</p>
 
@@ -162,35 +162,25 @@ export default function NewFlyForm({insertDocument}) {
           </label>
         </div>
 
-        <div>
-          <label>
-            Ville :
-            <select
-              value={villeArr}
-              onChange={(e) => setVilleArr(e.target.value)}
-              required
-            >
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
-            </select>
-          </label>
-        </div>
-
-        <div>
-          <label>
-            Nom de l'aéroport :
-            <select
-              value={airportArr}
-              onChange={(e) => setAirportArr(e.target.value)}
-              required
-            >
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
-            </select>
-          </label>
-        </div>
+        {paysArr && (
+          <div>
+            <label>
+              Nom de l'aéroport :
+              <select
+                value={airportArr}
+                onChange={(e) => setAirportArr(e.target.value)}
+                required
+              >
+                <option value="">
+                  <i>Veuillez sélectionner une aéroport</i>
+                </option>
+                {airPortArrList.map((arr) => {
+                  return <option value={arr.code_IATA}>{arr.nom}</option>;
+                })}
+              </select>
+            </label>
+          </div>
+        )}
 
         <p>Avion</p>
 
@@ -208,7 +198,7 @@ export default function NewFlyForm({insertDocument}) {
 
         <div>
           <label>
-            Capacité : 
+            Capacité :
             <input
               type="number"
               value={capacite}
