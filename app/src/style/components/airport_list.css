@@ -1,0 +1,48 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.item{
+    display:flex;
+    padding : 20px;
+    box-shadow: 1px 1px 15px 5px rgba(0,0,0,0.10);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.airport_list{
+    display: flex;
+    flex-direction: column;
+    gap : 20px;
+}
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.airport_list_header{
+    padding: 20px;
+    font-size: 20px;
+    display: flex;
+    gap: 8px;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.item_content{
+    display: flex;
+    gap: 100px;
+}
+
+.link{
+    text-decoration: none;
+    color : black;
+    display: flex;
+    flex-direction: column;
+}

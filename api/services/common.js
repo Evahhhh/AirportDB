@@ -1,3 +1,5 @@
+const { ObjectId } = require('bson');
+
 const insertDocument = async (db, collectionName, document) => {
   const collection = db.collection(collectionName);
   const result = await collection.insertOne(document);
@@ -7,12 +9,23 @@ const insertDocument = async (db, collectionName, document) => {
   return result;
 };
 
-const findDocuments = async (db, collectionName, filter) => {
+const findDocuments = async (db, collectionName, filter, isId = false) => {
+  if (isId) {
+    try {
+      key = Object.keys(filter)[0];
+      filterString = key.toString();
+      filter = { _id: new ObjectId(filterString) };
+    } catch (err) {
+      console.error('Error converting filter to ObjectId:', err);
+      return [];
+    }
+  }
   const collection = db.collection(collectionName);
   const result = await collection.find(filter).toArray();
   console.log(`Found ${result.length} document(s) in ${collectionName}`);
   return result;
 };
+
 
 const updateDocument = async (db, collectionName, filter, update) => {
   const collection = db.collection(collectionName);

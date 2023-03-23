@@ -5,11 +5,10 @@ import Airport_list from "../components/airport_list";
 
 export default function HomeViet() {
   return (
-    <div>
+    <>
       <div>
-        <h1>Home VIET</h1>
         <Airport_list pays="Vietnam" />
       </div>
-    </div>
+    </>
   );
 }

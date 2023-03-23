@@ -9,6 +9,7 @@ import Stats from "./pages/stats";
 import AddFly from "./pages/add_fly";
 import AddAirport from "./pages/add_airport";
 import Nav from "./components/nav";
+import PlaneByAirport from "./pages/plane_by_airport";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -22,6 +23,7 @@ root.render(
         <Route path="/stats" element={<Stats />} />
         <Route path="/addfly" element={<AddFly />} />
         <Route path="/addairport" element={<AddAirport />} />
+        <Route path="/planebyairport/:id" element={<PlaneByAirport />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
