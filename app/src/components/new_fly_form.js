@@ -23,6 +23,9 @@ export default function NewFlyForm({ insertDocument }) {
   const [airPortDepList, setAirPortDepList] = useState();
   const [airPortArrList, setAirPortArrList] = useState();
 
+  // TANT QUE CANADD EST PAS A TRTUE ON AJOUTE RIEN
+  const [canAdd, setCanAdd] = useState(false);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
@@ -41,7 +44,16 @@ export default function NewFlyForm({ insertDocument }) {
         toast.success("Vol ajouté avec succès !");
       });
   };
-  
+
+  useEffect(() => {
+    if(heureDep >= heureArr){
+      console.log("heure de départ supérieure à l'heure d'arrivée");
+      toast.error("La date d'arrivée doit être supérieure à celle de départ")
+    }else{
+      setCanAdd(true);
+    }
+  },[heureDep, heureArr]);
+
   useEffect(() => {
     axios.get(`${API_URL}/airport?pays=${paysDep}`).then((response) => {
       setAirPortDepList(response.data);
