@@ -82,10 +82,8 @@ router.post("/api/airport", async (req, res) => {
     const airportArrFind = await findDocuments(db, "airport", {
       code_IATA: airportArr,
     });
-    console.log({ airportDepFind, airportArrFind });
-    await updateDocument(
-      db,
-      "airport",
+    const collection = db.collection("airport");
+    const result = await collection.updateMany(
       { $or: [{ _id: airportDepFind[0]._id }, { _id: airportArrFind[0]._id }] },
       {
         $push: {
@@ -94,16 +92,16 @@ router.post("/api/airport", async (req, res) => {
             heure_depart: heureDep,
             heure_arrivee: heureArr,
             aeroport_depart: {
-              code_IATA: airportDepFind.code_IATA,
-              nom: airportDepFind.nom,
-              ville: airportDepFind.ville,
-              pays: airportDepFind.pays,
+              code_IATA: airportDepFind[0].code_IATA,
+              nom: airportDepFind[0].nom,
+              ville: airportDepFind[0].ville,
+              pays: airportDepFind[0].pays,
             },
             aeroport_arrivee: {
-              code_IATA: airportArrFind.code_IATA,
-              nom: airportArrFind.nom,
-              ville: airportArrFind.ville,
-              pays: airportArrFind.pays,
+              code_IATA: airportArrFind[0].code_IATA,
+              nom: airportArrFind[0].nom,
+              ville: airportArrFind[0].ville,
+              pays: airportArrFind[0].pays,
             },
             avion: {
               modele,
@@ -114,6 +112,7 @@ router.post("/api/airport", async (req, res) => {
         },
       }
     );
+    console.log(result);
     res.status(200);
   } catch (error) {
     console.error(error);
