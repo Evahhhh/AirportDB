@@ -9,6 +9,20 @@ const insertDocument = async (db, collectionName, document) => {
   return result;
 };
 
+const findFly = async (db, collectionName, filter) => {
+  try{
+    console.log("filter : ", filter)
+    const collection = db.collection(collectionName);
+    const result = await collection.find(filter).toArray();
+    console.log("result : ", result)
+    console.log(`Found ${result.length} document(s) in ${collectionName}`);
+    return result[0].vols;
+  }catch (error){
+    console.log("Error services common : findFly : ", error)
+    return [];
+  }
+}
+
 const findDocuments = async (db, collectionName, filter, isId = false) => {
   if (isId) {
     try {
@@ -52,10 +66,12 @@ const aggregateDocuments = async (db, collectionName, pipeline) => {
   return result;
 };
 
+
 module.exports = {
   insertDocument,
   findDocuments,
   deleteDocument,
   aggregateDocuments,
   updateDocument,
+  findFly,
 };

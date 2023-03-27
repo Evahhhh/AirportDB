@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import "../style/components/form.css";
 //formulaire
 export default function NewFlyForm({ insertDocument }) {
   const API_URL = "http://localhost:5150/api";
@@ -46,13 +46,13 @@ export default function NewFlyForm({ insertDocument }) {
   };
 
   useEffect(() => {
-    if(heureDep >= heureArr){
+    if (heureDep >= heureArr) {
       console.log("heure de départ supérieure à l'heure d'arrivée");
-      toast.error("La date d'arrivée doit être supérieure à celle de départ")
-    }else{
+      toast.error("La date d'arrivée doit être supérieure à celle de départ");
+    } else {
       setCanAdd(true);
     }
-  },[heureDep, heureArr]);
+  }, [heureDep, heureArr]);
 
   useEffect(() => {
     axios.get(`${API_URL}/airport?pays=${paysDep}`).then((response) => {
@@ -66,77 +66,83 @@ export default function NewFlyForm({ insertDocument }) {
 
   return (
     <>
-      <h1>NewFlyForm</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
+      <form onSubmit={handleSubmit} className="form-container">
+        <p className="title-form">Ajouter un vol</p>
+        <div className="form-group">
+          <label className="form-label">
             Numéro de vol :
             <input
               type="text"
               value={numVol}
               onChange={(e) => setNumVol(e.target.value)}
               required
+              className="form-input"
             />
           </label>
         </div>
 
-        <div>
-          <label>
+        <div className="form-group">
+          <label className="form-label">
             Heure de départ :
             <input
               type="datetime-local"
               value={heureDep}
               onChange={(e) => setHeureDep(e.target.value)}
               required
+              className="form-input"
             />
           </label>
         </div>
 
-        <div>
-          <label>
+        <div className="form-group">
+          <label className="form-label">
             Heure d'arrivée :
             <input
               type="datetime-local"
               value={heureArr}
               onChange={(e) => setHeureArr(e.target.value)}
               required
+              className="form-input"
             />
           </label>
         </div>
 
         <p>Aéroport de départ</p>
 
-        <div>
-          <label>
+        <div className="form-group">
+          <label className="form-label">
             <input
               type="radio"
               value="France"
               checked={paysDep === "France"}
               onChange={(e) => setPaysDep(e.target.value)}
               required
+              className="form-radio"
             />
             France
           </label>
-          <label>
+          <label className="form-label">
             <input
               type="radio"
               value="Vietnam"
               checked={paysDep === "Vietnam"}
               onChange={(e) => setPaysDep(e.target.value)}
               required
+              className="form-radio"
             />
             Vietnam
           </label>
         </div>
 
         {paysDep && (
-          <div>
-            <label>
+          <div className="form-group">
+            <label className="form-label">
               Nom de l'aéroport :
               <select
                 value={airportDep}
                 onChange={(e) => setAirportDep(e.target.value)}
                 required
+                className="form-select"
               >
                 <option value="">
                   <i>Veuillez sélectionner une aéroport</i>
@@ -151,37 +157,40 @@ export default function NewFlyForm({ insertDocument }) {
 
         <p>Aéroport d'arrivée</p>
 
-        <div>
-          <label>
+        <div className="form-group">
+          <label className="form-label">
             <input
               type="radio"
               value="France"
               checked={paysArr === "France"}
               onChange={(e) => setPaysArr(e.target.value)}
               required
+              className="form-radio"
             />
             France
           </label>
-          <label>
+          <label className="form-label">
             <input
               type="radio"
               value="Vietnam"
               checked={paysArr === "Vietnam"}
               onChange={(e) => setPaysArr(e.target.value)}
               required
+              className="form-radio"
             />
             Vietnam
           </label>
         </div>
 
         {paysArr && (
-          <div>
-            <label>
+          <div className="form-group">
+            <label className="form-label">
               Nom de l'aéroport :
               <select
                 value={airportArr}
                 onChange={(e) => setAirportArr(e.target.value)}
                 required
+                className="form-select"
               >
                 <option value="">
                   <i>Veuillez sélectionner une aéroport</i>
@@ -194,44 +203,49 @@ export default function NewFlyForm({ insertDocument }) {
           </div>
         )}
 
-        <p>Avion</p>
+        <p className="little-title-form">Avion</p>
 
-        <div>
-          <label>
+        <div className="form-group">
+          <label className="form-label">
             Modèle :
             <input
               type="text"
               value={modele}
               onChange={(e) => setModele(e.target.value)}
               required
+              className="form-input"
             />
           </label>
         </div>
 
-        <div>
-          <label>
+        <div className="form-group">
+          <label className="form-label">
             Capacité :
             <input
               type="number"
               value={capacite}
               onChange={(e) => setCapacite(e.target.value)}
+              className="form-input"
             />
           </label>
         </div>
 
-        <div>
-          <label>
+        <div className="form-group">
+          <label className="form-label">
             Compagnie :
             <input
               type="text"
               value={compagnie}
               onChange={(e) => setCompagnie(e.target.value)}
               required
+              className="form-input"
             />
           </label>
         </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit" className="form-button">
+          Submit
+        </button>
       </form>
       <ToastContainer />
     </>

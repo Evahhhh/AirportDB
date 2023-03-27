@@ -13,7 +13,6 @@ export default function AddFly() {
 
   return (
     <>
-      <h1>AddFly</h1>
       <NewFlyForm insertDocument={insertDocument} />
     </>
   );

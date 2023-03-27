@@ -3,6 +3,8 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import FlyListByAirport from "../components/fly_list_by_airport";
+import "../style/plane_by_airport.css";
 
 export default function PlaneByAirport() {
   const [, setPageIsMounted] = useState(false);
@@ -32,7 +34,6 @@ export default function PlaneByAirport() {
     if (typeof airport === "undefined") {
       console.log("airport undefined");
     } else {
-      // Create a new marker and add it to the map
       const marker = new mapboxgl.Marker()
         .setLngLat([
           airport.coordonnees_gps.longitude,
@@ -49,13 +50,40 @@ export default function PlaneByAirport() {
       });
     }
   }, [airport]);
-
   return (
-    <div>
-      <p>{airport && airport.code_IATA}</p>
-      <p>{airport && airport.nom}</p>
-      <p>{airport && airport.ville}</p>
-      <div id="my-map" style={{ height: "50vh", width: "100%" }} />
+    <div className="plane-by-airport_container">
+      <div className="airport-header">
+        <div className="aiport-infos">
+          <p className="IATA-airport">{airport && airport.code_IATA}</p>
+          <p className="name-airport">{airport && airport.nom}</p>
+          <p className="city-airport">Ville : {airport && airport.ville}</p>
+        </div>
+        <div id="my-map" style={{ height: "50vh", width: "50%" }} />
+      </div>
+      <>
+        <button className="btn-modif">Modifier l'aéroport</button>
+        <button className="btn-supp">Supprimer l'aéroport</button>
+      </>
+      <div className="plane-dp-arr">
+        <div className="section">
+          <p className="title-section">Départs</p>
+          {airport && (
+            <FlyListByAirport
+              airport_code={airport.code_IATA}
+              wanted="depart"
+            />
+          )}
+        </div>
+        <div className="section">
+          <p className="title-section">Arrivées</p>
+          {airport && (
+            <FlyListByAirport
+              airport_code={airport.code_IATA}
+              wanted="arrivee"
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 }

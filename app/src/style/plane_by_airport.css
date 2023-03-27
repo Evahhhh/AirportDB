@@ -1,0 +1,49 @@
+.plane-dp-arr{
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+}
+
+.plane-by-airport-container{
+    display : flex;
+    flex-direction: column;
+}
+
+.airport-header{
+    display: flex;
+    padding: 50px;
+    justify-content: space-between;
+}
+
+.aiport-infos{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.IATA-airport{
+    display: flex;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.name-airport{
+    display: flex;
+}
+
+.city-airport{
+    display: flex;
+}
+
+.section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap : 20px;
+}
+
+.title-section{
+    font-size: 20px;
+    font-weight: bold;
+    color : #375054;
+}

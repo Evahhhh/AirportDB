@@ -12,7 +12,6 @@ export default function addAirport() {
 
   return (
     <div>
-      <h1>add airport</h1>
       <NewAirportForm />
     </div>
   );

@@ -35,7 +35,7 @@ export default function Airport_list({ pays }) {
   }, [allAirport]);
 
   return (
-    <div className="container">
+    <div className="container-airport">
       <div className="airport_list_header">
         <p className="bold">{allAirport && allAirport.length}</p>
         <p> aéroports en {pays}</p>
