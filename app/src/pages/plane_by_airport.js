@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import FlyListByAirport from "../components/fly_list_by_airport";
 import "../style/plane_by_airport.css";
@@ -11,12 +12,59 @@ export default function PlaneByAirport() {
   const [airport, setAirport] = useState();
   const { id } = useParams();
   const API_URL = "http://localhost:5150/api";
+  const API_MAPS = "AIzaSyDszeQXLhCjjz14enAlH0rkx41Ry41XvsQ";
+  const [showPopup, setShowPopup] = useState(false);
+  const [code, setCode] = useState();
+  const [nom, setNom] = useState();
+  const [ville, setVille] = useState();
+  const [pays, setPays] = useState();
+
+  const handlePopup = () => {
+    setShowPopup(!showPopup);
+  };
+
+  const deleteDocuments = async (id) => {
+    await axios.delete(`${API_URL}/documents/${id}`).then(() => {
+      window.location.href = "/";
+    });
+  };
+
+  const handleSubmit = async (event, id) => {
+    event.preventDefault();
+    try {
+      const res = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${ville}&key=${API_MAPS}`
+      );
+
+      const response = await axios.put(`${API_URL}/documents/${id}`, {
+        code_IATA: code,
+        nom,
+        ville,
+        pays,
+        coordonnees_gps: {
+          latitude: res.data.results[0].geometry.location.lat,
+          longitude: res.data.results[0].geometry.location.lng,
+        },
+      });
+      if (response.data) {
+        toast.success("Modifications enregistrées !");
+        window.location.href = `/planebyairport/${airport._id}`;
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error("Cet aéroport est déjà ajouté !");
+    }
+  };
 
   useEffect(() => {
     const response = axios
       .get(`${API_URL}/airportbyid?${id}`)
       .then((response) => {
         setAirport(response.data[0]);
+        setCode(response.data[0].code_IATA);
+        setNom(response.data[0].nom);
+        setVille(response.data[0].ville);
+        setPays(response.data[0].pays);
       });
   }, []);
 
@@ -60,10 +108,98 @@ export default function PlaneByAirport() {
         </div>
         <div id="my-map" style={{ height: "50vh", width: "50%" }} />
       </div>
-      <>
-        <button className="btn-modif">Modifier l'aéroport</button>
-        <button className="btn-supp">Supprimer l'aéroport</button>
-      </>
+      <div className="buttons-section">
+        <button onClick={handlePopup} className="btn-modif btn">
+          Modifier l'aéroport
+        </button>
+        {showPopup && (
+          <div className="popup">
+            <div className="popup-content">
+              <h1 className="title-form">Modifier l'aéroport</h1>
+              <form onSubmit={(e) => handleSubmit(e,airport._id)}>
+                <div className="form-group">
+                  <label className="form-label">
+                    Code IATA :
+                    <input
+                      type="text"
+                      value={code}
+                      onChange={(e) => setCode(e.target.value)}
+                      required
+                      className="form-input"
+                    />
+                  </label>
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">
+                    Nom de l'aéroport :
+                    <input
+                      type="text"
+                      value={nom}
+                      onChange={(e) => setNom(e.target.value)}
+                      required
+                      className="form-input"
+                    />
+                  </label>
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">
+                    {/* Trouver le coordonnée en fonction du nom de la ville 
+                    https://www.npmjs.com/package/node-geocoder
+                    */}
+                    Ville :
+                    <input
+                      type="text"
+                      value={ville}
+                      onChange={(e) => setVille(e.target.value)}
+                      required
+                      className="form-input"
+                    />
+                  </label>
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">
+                    <input
+                      type="radio"
+                      value="France"
+                      checked={pays === "France"}
+                      onChange={(e) => setPays(e.target.value)}
+                      required
+                      className="form-radio"
+                    />
+                    France
+                  </label>
+                  <label className="form-label">
+                    <input
+                      type="radio"
+                      value="Vietnam"
+                      checked={pays === "Vietnam"}
+                      onChange={(e) => setPays(e.target.value)}
+                      required
+                      className="form-radio"
+                    />
+                    Vietnam
+                  </label>
+                </div>
+                <button type="submit" className="form-button">
+                  Submit
+                </button>
+              </form>
+              <button onClick={handlePopup} className="btn-close btn">
+                Fermer la pop-up
+              </button>
+            </div>
+          </div>
+        )}
+        <button
+          onClick={() => deleteDocuments(airport._id)}
+          className="btn-supp btn"
+        >
+          Supprimer l'aéroport
+        </button>
+      </div>
       <div className="plane-dp-arr">
         <div className="section">
           <p className="title-section">Départs</p>
@@ -84,6 +220,7 @@ export default function PlaneByAirport() {
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

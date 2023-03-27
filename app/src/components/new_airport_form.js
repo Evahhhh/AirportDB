@@ -2,19 +2,40 @@ import React, { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../style/components/form.css";
+import axios from "axios";
 
-export default function NewAirportForm({ insertDocument }) {
+export default function NewAirportForm() {
   const [code, setCode] = useState();
   const [nom, setNom] = useState();
   const [ville, setVille] = useState();
   const [pays, setPays] = useState();
+  const API_URL = "http://localhost:5150/api";
+  const API_MAPS = "AIzaSyDszeQXLhCjjz14enAlH0rkx41Ry41XvsQ";
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    toast.success("Aéroport ajouté avec succès !");
-  };
+    try {
+      const res = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${ville}&key=${API_MAPS}`
+      );
 
-  //ATTENTION : VERIFIER SI LE CODE IATA EXISTE DEJA EN RECUPERANT TOUS LES IATA EXISTANTS REFUSER LE FORMULAIRE SINON
+      const response = await axios.post(`${API_URL}/airport`, {
+        code_IATA: code,
+        nom,
+        ville,
+        pays,
+        coordonnees_gps: {
+          latitude: res.data.results[0].geometry.location.lat,
+          longitude: res.data.results[0].geometry.location.lng,
+        },
+      });
+      if (response.data) {
+        toast.success("Aéroport ajouté avec succès !");
+      }
+    } catch (error) {
+      toast.error("Cet aéroport est déjà ajouté !");
+    }
+  };
 
   return (
     <>
@@ -49,6 +70,9 @@ export default function NewAirportForm({ insertDocument }) {
 
         <div className="form-group">
           <label className="form-label">
+            {/* Trouver le coordonnée en fonction du nom de la ville 
+           https://www.npmjs.com/package/node-geocoder
+            */}
             Ville :
             <input
               type="text"
@@ -85,7 +109,7 @@ export default function NewAirportForm({ insertDocument }) {
           </label>
         </div>
         <button type="submit" className="form-button">
-          Submit
+          Ajouter
         </button>
       </form>
       <ToastContainer />

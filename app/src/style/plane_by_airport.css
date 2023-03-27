@@ -1,49 +1,112 @@
-.plane-dp-arr{
-    display: flex;
-    justify-content: center;
-    gap: 100px;
+.plane-dp-arr {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
 }
 
-.plane-by-airport-container{
-    display : flex;
-    flex-direction: column;
+.plane-by-airport-container {
+  display: flex;
+  flex-direction: column;
 }
 
-.airport-header{
-    display: flex;
-    padding: 50px;
-    justify-content: space-between;
+.airport-header {
+  display: flex;
+  padding: 50px;
+  justify-content: space-between;
 }
 
-.aiport-infos{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.aiport-infos {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.IATA-airport{
-    display: flex;
-    font-weight: bold;
-    font-size: 20px;
+.IATA-airport {
+  display: flex;
+  font-weight: bold;
+  font-size: 20px;
 }
 
-.name-airport{
-    display: flex;
+.name-airport {
+  display: flex;
 }
 
-.city-airport{
-    display: flex;
+.city-airport {
+  display: flex;
 }
 
-.section{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap : 20px;
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
-.title-section{
-    font-size: 20px;
-    font-weight: bold;
-    color : #375054;
+.title-section {
+  font-size: 20px;
+  font-weight: bold;
+  color: #375054;
+}
+
+.buttons-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 50px;
+}
+
+.btn {
+  cursor: pointer;
+  width: 70%;
+  padding: 10px;
+  color: #ffffff;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+}
+
+.btn-close{
+  width: 100% !important;
+  background-color: #5f021f;
+  margin-top: 10px;
+}
+
+.btn-close:hover {
+  background-color: #8b0a2b;
+}
+
+.btn-modif {
+  background-color: #b67470;
+}
+
+.btn-modif:hover {
+  background-color: #c78380;
+}
+
+.btn-supp {
+  background-color: #5f021f;
+}
+
+.btn-supp:hover {
+  background-color: #8b0a2b;
+}
+
+.popup {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
 }

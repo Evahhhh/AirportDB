@@ -1,16 +1,16 @@
 var newDoc = {
-  code_IATA: "CDG",
-  nom: "Aéroport Charles de Gaulle",
-  ville: "Paris",
-  pays: "France",
+  code_IATA: "HUE",
+  nom: "Aéroport de Hue",
+  ville: "Hue",
+  pays: "Vietnam",
   coordonnees_gps: {
     latitude: 49.009691,
     longitude: 2.547925,
   },
   vols: [
     {
-      _id: "AF123",
-      numero_vol: "AF123",
+      _id: "FH274",
+      numero_vol: "AFJ89",
       heure_depart: new Date("2023-03-21T10:00:00Z"),
       heure_arrivee: new Date("2023-03-21T12:30:00Z"),
       aeroport_depart: {
