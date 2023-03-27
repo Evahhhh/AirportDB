@@ -32,6 +32,24 @@ router.post("/api/documents", async (req, res) => {
   }
 });
 
+router.post("/api/airport", async (req, res) => {
+  try {
+    const body = req.body;
+    const airport = await findDocuments(db, "airport", {
+      code_IATA: body.code_IATA,
+    });
+    if (airport.length > 0) {
+      throw new Error("Cet aéroport existe déjà");
+    } else {
+      const result = await insertDocument(db, "airport", body);
+      res.json(result);
+    }
+  } catch (err) {
+    console.error("err", err);
+    res.status(500).json({ error: "An error occurred" });
+  }
+});
+
 router.get("/api/airport", async (req, res) => {
   try {
     const documents = await findDocuments(db, "airport", req.query);
@@ -45,7 +63,7 @@ router.get("/api/airport", async (req, res) => {
 router.get("/api/airport/fly", async (req, res) => {
   try {
     const documents = await findFly(db, "airport", req.query);
-    console.log("documents : " , documents)
+    console.log("documents : ", documents);
     res.json(documents);
   } catch (err) {
     console.error(err);
