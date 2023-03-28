@@ -52,7 +52,7 @@ export default function PlaneByAirport() {
       }
     } catch (error) {
       console.log(error)
-      toast.error("Cet aéroport est déjà ajouté !");
+      toast.error("Cet aéroport existe déjà !");
     }
   };
 
@@ -184,7 +184,7 @@ export default function PlaneByAirport() {
                   </label>
                 </div>
                 <button type="submit" className="form-button">
-                  Submit
+                  Modifier
                 </button>
               </form>
               <button onClick={handlePopup} className="btn-close btn">
@@ -207,6 +207,7 @@ export default function PlaneByAirport() {
             <FlyListByAirport
               airport_code={airport.code_IATA}
               wanted="depart"
+              airport_id={id}
             />
           )}
         </div>
@@ -216,6 +217,7 @@ export default function PlaneByAirport() {
             <FlyListByAirport
               airport_code={airport.code_IATA}
               wanted="arrivee"
+              airport_id={id}
             />
           )}
         </div>

@@ -36,7 +36,7 @@ const deleteFly = async (db, collectionName, code_IATA, num_vol) => {
       { code_IATA: code_IATA },
       { $pull: { vols: { numero_vol: num_vol } } }
     );
-    console.log('Vol supprimé avec succès');
+    console.log("Vol supprimé avec succès");
     return result;
   } catch (error) {
     console.log("Error services common : deleteFly : ", error);
@@ -70,6 +70,19 @@ const updateDocument = async (db, collectionName, filter, update) => {
   return result;
 };
 
+const updateFly = async (db, collectionName, filter, update) => {
+  try {
+    const collection = db.collection(collectionName);
+    const result = await collection.updateOne(filter, update);
+    console.log("UPDATE " ,update);
+    console.log("FILTER " ,filter);
+    return result;
+  } catch (error) {
+    console.log("Error services common : updateFly : ", error);
+    return [];
+  }
+};
+
 const deleteDocument = async (db, collectionName, filter) => {
   const collection = db.collection(collectionName);
   const result = await collection.deleteOne(filter);
@@ -94,4 +107,5 @@ module.exports = {
   updateDocument,
   findFly,
   deleteFly,
+  updateFly
 };
