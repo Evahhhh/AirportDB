@@ -1,4 +1,4 @@
-const { ObjectId } = require('bson');
+const { ObjectId } = require("bson");
 
 const insertDocument = async (db, collectionName, document) => {
   const collection = db.collection(collectionName);
@@ -10,19 +10,24 @@ const insertDocument = async (db, collectionName, document) => {
 };
 
 const findFly = async (db, collectionName, query) => {
-  try{ 
+  try {
     const collection = db.collection(collectionName);
-    const result = await collection.find({ code_IATA: query.code_IATA }).toArray();
-    result[0].vols.filter((vol) => {
-      vol[`aeroport_${query.wanted}`].code_IATA === query.code_IATA
-    })
-    console.log(result[0].vols)
-    return result[0].vols;
-  }catch (error){
-    console.log("Error services common : findFly : ", error)
+    const result = await collection
+      .find({
+        vols: {
+          $elemMatch: {
+            [`aeroport_${query.wanted}.code_IATA`]: query.code_IATA,
+          },
+        },
+      })
+      .toArray();
+    console.log(result[0]);
+    return result[0] && result[0].vols;
+  } catch (error) {
+    console.log("Error services common : findFly : ", error);
     return [];
   }
-}
+};
 
 const findDocuments = async (db, collectionName, filter, isId = false) => {
   if (isId) {
@@ -31,7 +36,7 @@ const findDocuments = async (db, collectionName, filter, isId = false) => {
       filterString = key.toString();
       filter = { _id: new ObjectId(filterString) };
     } catch (err) {
-      console.error('Error converting filter to ObjectId:', err);
+      console.error("Error converting filter to ObjectId:", err);
       return [];
     }
   }
@@ -40,7 +45,6 @@ const findDocuments = async (db, collectionName, filter, isId = false) => {
   console.log(`Found ${result.length} document(s) in ${collectionName}`);
   return result;
 };
-
 
 const updateDocument = async (db, collectionName, filter, update) => {
   const collection = db.collection(collectionName);
@@ -66,7 +70,6 @@ const aggregateDocuments = async (db, collectionName, pipeline) => {
   console.log(`Aggregated ${result.length} document(s) in ${collectionName}`);
   return result;
 };
-
 
 module.exports = {
   insertDocument,
