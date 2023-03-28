@@ -15,7 +15,6 @@ export default function FlyListByAirport({ airport_code, wanted }) {
 
   const deleteFly = () => {
     console.log("suppression");
-    
   };
 
   useEffect(() => {
@@ -58,22 +57,24 @@ export default function FlyListByAirport({ airport_code, wanted }) {
               <p>Modèle de l'avion : {fly.avion.modele}</p>
               <p>Compagnie : {fly.avion.compagnie_aerienne}</p>
               <p>Capacité : {fly.avion.capacite}</p>
-              <button onClick={handlePopup} className="btn-modif btn">
-                Modifier le vol
-              </button>
-              {showPopup && (
-                <div className="popup">
-                  <div className="popup-content">
-                    <p> Hello world</p>
-                    <button onClick={handlePopup} className="btn-close btn">
-                      Retour
-                    </button>
+              <div className="btn-section">
+                <button onClick={handlePopup} className="btn-modif btn">
+                  Modifier le vol
+                </button>
+                {showPopup && (
+                  <div className="popup">
+                    <div className="popup-content">
+                      <p> Hello world</p>
+                      <button onClick={handlePopup} className="btn-close btn">
+                        Retour
+                      </button>
+                    </div>
                   </div>
-                </div>
-              )}
-              <button onClick={() => deleteFly()} className="btn-supp btn">
-                Supprimer l'aéroport
-              </button>
+                )}
+                <button onClick={() => deleteFly()} className="btn-supp btn">
+                  Supprimer l'aéroport
+                </button>
+              </div>
             </div>
           ))}
       </div>
