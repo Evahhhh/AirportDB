@@ -188,7 +188,7 @@ export default function PlaneByAirport() {
                 </button>
               </form>
               <button onClick={handlePopup} className="btn-close btn">
-                Fermer la pop-up
+                Retour
               </button>
             </div>
           </div>

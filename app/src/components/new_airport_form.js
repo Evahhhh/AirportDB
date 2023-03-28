@@ -28,6 +28,8 @@ export default function NewAirportForm() {
           latitude: res.data.results[0].geometry.location.lat,
           longitude: res.data.results[0].geometry.location.lng,
         },
+        vols:{
+        },
       });
       if (response.data) {
         toast.success("Aéroport ajouté avec succès !");

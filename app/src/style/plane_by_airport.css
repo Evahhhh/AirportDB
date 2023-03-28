@@ -68,28 +68,28 @@
 
 .btn-close{
   width: 100% !important;
-  background-color: #5f021f;
+  background-color: #8b0a2b;
   margin-top: 10px;
 }
 
 .btn-close:hover {
-  background-color: #8b0a2b;
-}
-
-.btn-modif {
-  background-color: #b67470;
-}
-
-.btn-modif:hover {
-  background-color: #c78380;
-}
-
-.btn-supp {
   background-color: #5f021f;
 }
 
-.btn-supp:hover {
+.btn-modif {
+  background-color: #c78380;
+}
+
+.btn-modif:hover {
+  background-color: #b67470;
+}
+
+.btn-supp {
   background-color: #8b0a2b;
+}
+
+.btn-supp:hover {
+  background-color: #5f021f;
 }
 
 .popup {

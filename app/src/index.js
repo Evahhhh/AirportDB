@@ -10,7 +10,6 @@ import AddFly from "./pages/add_fly";
 import AddAirport from "./pages/add_airport";
 import Nav from "./components/nav";
 import PlaneByAirport from "./pages/plane_by_airport";
-import FlyInfos from "./pages/fly_infos";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -24,7 +23,6 @@ root.render(
         <Route path="/stats" element={<Stats />} />
         <Route path="/addfly" element={<AddFly />} />
         <Route path="/addairport" element={<AddAirport />} />
-        <Route path="/flyinfos" element={<FlyInfos />} />
         <Route path="/planebyairport/:id" element={<PlaneByAirport />} />
       </Routes>
     </BrowserRouter>

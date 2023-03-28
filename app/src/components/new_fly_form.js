@@ -6,19 +6,19 @@ import "../style/components/form.css";
 //formulaire
 export default function NewFlyForm({ insertDocument }) {
   const API_URL = "http://localhost:5150/api";
-  const [numVol, setNumVol] = useState('');
+  const [numVol, setNumVol] = useState("");
   const [heureDep, setHeureDep] = useState();
   const [heureArr, setHeureArr] = useState();
   //aéroport départ
-  const [paysDep, setPaysDep] = useState('');
-  const [airportDep, setAirportDep] = useState('');
+  const [paysDep, setPaysDep] = useState("");
+  const [airportDep, setAirportDep] = useState("");
   //aéroport arrivée
-  const [paysArr, setPaysArr] = useState('');
-  const [airportArr, setAirportArr] = useState('');
+  const [paysArr, setPaysArr] = useState("");
+  const [airportArr, setAirportArr] = useState("");
   //avion
-  const [modele, setModele] = useState('');
-  const [capacite, setCapacite] = useState('');
-  const [compagnie, setCompagnie] = useState('');
+  const [modele, setModele] = useState("");
+  const [capacite, setCapacite] = useState("");
+  const [compagnie, setCompagnie] = useState("");
 
   const [airPortDepList, setAirPortDepList] = useState();
   const [airPortArrList, setAirPortArrList] = useState();
@@ -40,20 +40,25 @@ export default function NewFlyForm({ insertDocument }) {
         compagnie,
       })
       .then((response) => {
-        setAirPortDepList(response.data);
         toast.success("Vol ajouté avec succès !");
+        console.log(numVol,
+          heureArr,
+          heureDep,
+          airportArr,
+          airportDep,
+          modele,
+          capacite,
+          compagnie)
       });
   };
 
   useEffect(() => {
-    // if(heureDep !== '' || heureArr !== ''){
-      if (heureDep >= heureArr) {
-        console.log("heure de départ supérieure à l'heure d'arrivée");
-        toast.error("La date d'arrivée doit être supérieure à celle de départ");
-      } else {
-        setCanAdd(true);
-      }
-    // }
+    if (heureDep >= heureArr) {
+      console.log("heure de départ supérieure à l'heure d'arrivée");
+      toast.error("La date d'arrivée doit être supérieure à celle de départ");
+    } else {
+      setCanAdd(true);
+    }
   }, [heureDep, heureArr]);
 
   useEffect(() => {
@@ -146,12 +151,15 @@ export default function NewFlyForm({ insertDocument }) {
                 required
                 className="form-select"
               >
-                <option value="">
-                  Veuillez sélectionner un aéroport
-                </option>
-                {Array.isArray(airPortDepList) && airPortDepList.map((arr) => {
-                  return <option key={arr.code_IATA} value={arr.code_IATA}>{arr.nom}</option>;
-                })}
+                <option value="">Veuillez sélectionner un aéroport</option>
+                {Array.isArray(airPortDepList) &&
+                  airPortDepList.map((arr) => {
+                    return (
+                      <option key={arr.code_IATA} value={arr.code_IATA}>
+                        {arr.nom}
+                      </option>
+                    );
+                  })}
               </select>
             </label>
           </div>
@@ -194,11 +202,13 @@ export default function NewFlyForm({ insertDocument }) {
                 required
                 className="form-select"
               >
-                <option value="">
-                  Veuillez sélectionner un aéroport
-                </option>
+                <option value="">Veuillez sélectionner un aéroport</option>
                 {airPortArrList.map((arr) => {
-                  return <option key={arr.code_IATA} value={arr.code_IATA}>{arr.nom}</option>;
+                  return (
+                    <option key={arr.code_IATA} value={arr.code_IATA}>
+                      {arr.nom}
+                    </option>
+                  );
                 })}
               </select>
             </label>

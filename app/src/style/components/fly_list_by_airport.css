@@ -1,26 +1,51 @@
-.container-fly{
-    display : flex;
-    flex-direction: column;
-    margin: 20px;
+.container-fly {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
 }
 
-.fly-item{
-    padding : 20px;
-    box-shadow: 1px 1px 15px 5px rgba(0,0,0,0.10);
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
+.fly-item {
+  padding: 20px;
+  box-shadow: 1px 1px 15px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
 }
 
-.title{
-    font-size: 16px;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
+.title {
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
 }
 
-.fly_list{
-    gap: 30px;
-    display: flex;
-    flex-direction: column;
+.fly_list {
+  gap: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.inf-btn-large {
+  border: none;
+  cursor: pointer;
+  box-shadow: 1px 1px 15px 5px rgba(0, 0, 0, 0.1);
+  background-color: #3c585d;
+  padding : 0 !important;
+  border-radius: 5px;
+}
+
+.inf-btn-large:hover {
+  background-color: #35454d;
+}
+
+.inf-btn {
+  border-radius: 10px;
+  background-color: #3c585d;
+  color: white;
+  width: 100%;
+  padding: 8px;
+}
+
+.inf-btn:hover {
+  background-color: #35454d;
 }

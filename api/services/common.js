@@ -9,13 +9,14 @@ const insertDocument = async (db, collectionName, document) => {
   return result;
 };
 
-const findFly = async (db, collectionName, filter) => {
-  try{
-    console.log("filter : ", filter)
+const findFly = async (db, collectionName, query) => {
+  try{ 
     const collection = db.collection(collectionName);
-    const result = await collection.find(filter).toArray();
-    console.log("result : ", result)
-    console.log(`Found ${result.length} document(s) in ${collectionName}`);
+    const result = await collection.find({ code_IATA: query.code_IATA }).toArray();
+    result[0].vols.filter((vol) => {
+      vol[`aeroport_${query.wanted}`].code_IATA === query.code_IATA
+    })
+    console.log(result[0].vols)
     return result[0].vols;
   }catch (error){
     console.log("Error services common : findFly : ", error)
