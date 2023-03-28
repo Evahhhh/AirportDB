@@ -38,20 +38,11 @@ export default function NewFlyForm({ insertDocument }) {
       })
       .then((response) => {
         toast.success("Vol ajouté avec succès !");
-        console.log(numVol,
-          heureArr,
-          heureDep,
-          airportArr,
-          airportDep,
-          modele,
-          capacite,
-          compagnie)
       });
   };
 
   useEffect(() => {
     if (heureDep >= heureArr) {
-      console.log("heure de départ supérieure à l'heure d'arrivée");
       toast.error("La date d'arrivée doit être supérieure à celle de départ");
     }
   }, [heureDep, heureArr]);

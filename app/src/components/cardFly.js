@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { format, parseISO } from "date-fns";
-import { toast, ToastContainer } from "react-toastify";
+import { format } from "date-fns";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 import "../style/components/fly_list_by_airport.css";
 
@@ -20,10 +20,10 @@ export default function CardFly({
   const [heureArr, setHeureArr] = useState(fly.heure_arrivee);
   //aéroport départ
   const [paysDep, setPaysDep] = useState(fly.aeroport_depart.pays);
-  const [airportDep, setAirportDep] = useState(fly.aeroport_depart.nom);
+  const [airportDep, setAirportDep] = useState(fly.aeroport_depart.code_IATA);
   //aéroport arrivée
   const [paysArr, setPaysArr] = useState(fly.aeroport_arrivee.pays);
-  const [airportArr, setAirportArr] = useState(fly.aeroport_arrivee.nom);
+  const [airportArr, setAirportArr] = useState(fly.aeroport_arrivee.code_IATA);
   //avion
   const [modele, setModele] = useState(fly.avion.modele);
   const [capacite, setCapacite] = useState(fly.avion.capacite);
@@ -55,7 +55,6 @@ export default function CardFly({
     }
     try {
     } catch (error) {
-      console.log(error);
       toast.error("Ce vol existe déjà !");
     }
   };
@@ -64,14 +63,12 @@ export default function CardFly({
     await axios
       .delete(`${API_URL}/airport/fly/${airport_code}/${fly.numero_vol}`)
       .then(() => {
-        console.log("okay");
         window.location.href = `/planebyairport/${airport_id}`;
       });
   };
 
   useEffect(() => {
     if (heureDep >= heureArr) {
-      console.log("heure de départ supérieure à l'heure d'arrivée");
       toast.error("La date d'arrivée doit être supérieure à celle de départ");
     }
   }, [heureDep, heureArr]);
@@ -121,9 +118,6 @@ export default function CardFly({
             <div className="popup">
               <div className="popup-content">
                 <h1 className="title-form">Modifier le vol</h1>
-
-                {/* AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA */}
-
                 <form onSubmit={(e) => handleSubmit(e)}>
                   <div className="cols-manage">
                     <div className="col1">
@@ -324,7 +318,6 @@ export default function CardFly({
                     Modifier
                   </button>
                 </form>
-                {/* AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA */}
 
                 <button onClick={handlePopup} className="btn-close btn">
                   Retour

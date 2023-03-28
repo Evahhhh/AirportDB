@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { format, parseISO } from "date-fns";
-import { toast, ToastContainer } from "react-toastify";
+import React, { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
 import CardFly from "./cardFly";
 
 import "../style/components/fly_list_by_airport.css";
@@ -14,7 +13,6 @@ export default function FlyListByAirport({ airport_code, wanted, airport_id }) {
     const response = axios
       .get(`${API_URL}/airport/fly?code_IATA=${airport_code}&wanted=${wanted}`)
       .then((response) => {
-        console.log("réponse api : ", response.data);
         setAllFly(response.data);
       });
   }, []);

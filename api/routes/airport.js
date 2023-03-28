@@ -44,7 +44,6 @@ router.get("/api/airport", async (req, res) => {
 router.get("/api/airport/fly", async (req, res) => {
   try {
     const documents = await findFly(db, "airport", req.query);
-    console.log("documents : ", documents);
     res.json(documents);
   } catch (err) {
     console.error(err);
@@ -153,10 +152,7 @@ router.put("/api/airport/fly/:id", async (req, res) => {
     });
     const code_IATA = req.params.id;
     const filter = {
-      $and: [
-        { "code_IATA": { code_IATA } },
-        { "vols.numero_vol":  { numVol } },
-      ],
+      $and: [{ code_IATA: code_IATA }, { "vols.numero_vol": numVol }],
     };
     const update = {
       $set: {

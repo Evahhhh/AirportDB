@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import axios from "axios";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import axios from "axios";
 import FlyListByAirport from "../components/fly_list_by_airport";
 import "../style/plane_by_airport.css";
 
@@ -51,7 +51,6 @@ export default function PlaneByAirport() {
         window.location.href = `/planebyairport/${airport._id}`;
       }
     } catch (error) {
-      console.log(error)
       toast.error("Cet aéroport existe déjà !");
     }
   };

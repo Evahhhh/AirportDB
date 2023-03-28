@@ -3,9 +3,6 @@ const { ObjectId } = require("bson");
 const insertDocument = async (db, collectionName, document) => {
   const collection = db.collection(collectionName);
   const result = await collection.insertOne(document);
-  console.log(
-    `Inserted ${result.insertedCount} document(s) into ${collectionName}`
-  );
   return result;
 };
 
@@ -21,7 +18,6 @@ const findFly = async (db, collectionName, query) => {
         },
       })
       .toArray();
-    console.log(result[0]);
     return result[0] && result[0].vols;
   } catch (error) {
     console.log("Error services common : findFly : ", error);
@@ -36,7 +32,6 @@ const deleteFly = async (db, collectionName, code_IATA, num_vol) => {
       { code_IATA: code_IATA },
       { $pull: { vols: { numero_vol: num_vol } } }
     );
-    console.log("Vol supprimé avec succès");
     return result;
   } catch (error) {
     console.log("Error services common : deleteFly : ", error);
@@ -57,16 +52,12 @@ const findDocuments = async (db, collectionName, filter, isId = false) => {
   }
   const collection = db.collection(collectionName);
   const result = await collection.find(filter).toArray();
-  console.log(`Found ${result.length} document(s) in ${collectionName}`);
   return result;
 };
 
 const updateDocument = async (db, collectionName, filter, update) => {
   const collection = db.collection(collectionName);
   const result = await collection.updateOne(filter, { $set: update });
-  console.log(
-    `Updated ${result.modifiedCount} document(s) in ${collectionName}`
-  );
   return result;
 };
 
@@ -74,8 +65,6 @@ const updateFly = async (db, collectionName, filter, update) => {
   try {
     const collection = db.collection(collectionName);
     const result = await collection.updateOne(filter, update);
-    console.log("UPDATE " ,update);
-    console.log("FILTER " ,filter);
     return result;
   } catch (error) {
     console.log("Error services common : updateFly : ", error);
@@ -86,16 +75,12 @@ const updateFly = async (db, collectionName, filter, update) => {
 const deleteDocument = async (db, collectionName, filter) => {
   const collection = db.collection(collectionName);
   const result = await collection.deleteOne(filter);
-  console.log(
-    `Deleted ${result.deletedCount} document(s) from ${collectionName}`
-  );
   return result;
 };
 
 const aggregateDocuments = async (db, collectionName, pipeline) => {
   const collection = db.collection(collectionName);
   const result = await collection.aggregate(pipeline).toArray();
-  console.log(`Aggregated ${result.length} document(s) in ${collectionName}`);
   return result;
 };
 
@@ -107,5 +92,5 @@ module.exports = {
   updateDocument,
   findFly,
   deleteFly,
-  updateFly
+  updateFly,
 };
