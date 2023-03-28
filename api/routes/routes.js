@@ -50,6 +50,60 @@ router.post("/api/airport", async (req, res) => {
   }
 });
 
+router.post("/api/airport/fly", async (req, res) => {
+  try {
+    const {
+      numVol,
+      heureArr,
+      heureDep,
+      airportArr,
+      airportDep,
+      modele,
+      capacite,
+      compagnie,
+    } = req.body;
+    const airportDepFind = await findDocuments(db, "airport", {
+      code_IATA: airportDep,
+    });
+    const airportArrFind = await findDocuments(db, "airport", {
+      code_IATA: airportArr,
+    });
+    const collection = db.collection("airport");
+    const result = await collection.updateOne(
+      { $or: [{ _id: airportDepFind[0]._id }, { _id: airportArrFind[0]._id }] },
+      {
+        $push: {
+          vols: {
+            numero_vol: numVol,
+            heure_depart: heureDep,
+            heure_arrivee: heureArr,
+            aeroport_depart: {
+              code_IATA: airportDepFind.code_IATA,
+              nom: airportDepFind.nom,
+              ville: airportDepFind.ville,
+              pays: airportDepFind.pays,
+            },
+            aeroport_arrivee: {
+              code_IATA: airportArrFind.code_IATA,
+              nom: airportArrFind.nom,
+              ville: airportArrFind.ville,
+              pays: airportArrFind.pays,
+            },
+            avion: {
+              modele,
+              capacite,
+              compagnie_aerienne: compagnie,
+            },
+          },
+        },
+      }
+    );
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+});
+
 router.get("/api/airport", async (req, res) => {
   try {
     const documents = await findDocuments(db, "airport", req.query);

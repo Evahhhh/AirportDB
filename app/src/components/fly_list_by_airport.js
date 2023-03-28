@@ -27,14 +27,19 @@ export default function FlyListByAirport({ airport_code, wanted }) {
             <div key={index} className="fly-item">
               <p className="title">Vol {fly.numero_vol}</p>
               <p>
-                Départ le : {format(new Date(fly.heure_depart), "dd/MM/yyyy HH:mm:ss")}{" "}
+                Départ le :{" "}
+                {format(new Date(fly.heure_depart), "dd/MM/yyyy HH:mm:ss")}{" "}
               </p>
               <p>
-                Arrivée le : {format(new Date(fly.heure_arrivee), "dd/MM/yyyy HH:mm:ss")}{" "}
+                Arrivée le :{" "}
+                {format(new Date(fly.heure_arrivee), "dd/MM/yyyy HH:mm:ss")}{" "}
               </p>
               <p>Modèle de l'avion : {fly.avion.modele}</p>
               <p>Compagnie : {fly.avion.compagnie_aerienne}</p>
               <p>Capacité : {fly.avion.capacite}</p>
+              <Link className="btn" to="/flyinfos">
+                <button>Voir plus</button>
+              </Link>
             </div>
           ))}
       </div>
