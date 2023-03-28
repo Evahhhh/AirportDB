@@ -32,6 +32,11 @@ export default function Stats() {
     });
   }, []);
   console.log({ stats });
+  // airport => liste des aéroports a moins de 100km de l'aéroport sélectionner
+  // airportCapacty => le nombre de vols qui ont une capacité supérieur à celle rentrée dans le champs
+  // avgAirport => la moyenne des coordonnées
+  // avgVol => Le nombre de vol au départ des aéroports
+  // currentFlyCompany => Vol pour l'aéroport mis dans le champs
   return (
     <div>
       <h1>Stats</h1>

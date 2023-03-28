@@ -3,9 +3,9 @@ var newDoc = {
   nom: "Aéroport de Hue",
   ville: "Hue",
   pays: "Vietnam",
-  coordonnees_gps: {
-    latitude: 49.009691,
-    longitude: 2.547925,
+  location: {
+    type: "Point",
+    coordinates: [2.547925, 49.009691],
   },
   vols: [
     {
@@ -18,9 +18,9 @@ var newDoc = {
         nom: "Aéroport Charles de Gaulle",
         ville: "Paris",
         pays: "France",
-        coordonnees_gps: {
-          latitude: 49.009691,
-          longitude: 2.547925,
+        location: {
+          type: "Point",
+          coordinates: [2.547925, 49.009691],
         },
       },
       aeroport_arrivee: {
@@ -28,9 +28,9 @@ var newDoc = {
         nom: "Aéroport Hue",
         ville: "Hue",
         pays: "Vietnam",
-        coordonnees_gps: {
-          latitude: 16.397733,
-          longitude:  107.700131,
+        location: {
+          type: "Point",
+          coordinates: [107.700131, 16.397733],
         },
       },
       avion: {

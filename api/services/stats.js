@@ -7,8 +7,8 @@ async function averageAiport(collection) {
       {
         $group: {
           _id: null,
-          avgLatitude: { $avg: "$coordonnees_gps.latitude" },
-          avgLongitude: { $avg: "$coordonnees_gps.longitude" },
+          avgLatitude: { $avg: "$location.coordinates[1]" },
+          avgLongitude: { $avg: "$location.coordinates[0]" },
         },
       },
       { $project: { _id: 0, avgLatitude: 1, avgLongitude: 1 } },
@@ -48,11 +48,11 @@ async function airportArround(collection, id) {
           $geometry: {
             type: "Point",
             coordinates: [
-              findAirportArround[0].coordonnees_gps.longitude,
-              findAirportArround[0].coordonnees_gps.longitude,
+              findAirportArround[0].location.coordinates[0],
+              findAirportArround[0].location.coordinates[1],
             ],
           },
-          $maxDistance: 100000000,
+          $maxDistance: 100000, // distance en mètres
         },
       },
     })

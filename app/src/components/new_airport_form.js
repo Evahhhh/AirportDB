@@ -24,9 +24,12 @@ export default function NewAirportForm() {
         nom,
         ville,
         pays,
-        coordonnees_gps: {
-          latitude: res.data.results[0].geometry.location.lat,
-          longitude: res.data.results[0].geometry.location.lng,
+        location: {
+          type: "Point",
+          coordinates: [
+            res.data.results[0].geometry.location.lng,
+            res.data.results[0].geometry.location.lat,
+          ],
         },
         vols: [],
       });

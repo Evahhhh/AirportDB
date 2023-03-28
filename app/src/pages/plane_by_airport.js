@@ -41,9 +41,11 @@ export default function PlaneByAirport() {
         nom,
         ville,
         pays,
-        coordonnees_gps: {
-          latitude: res.data.results[0].geometry.location.lat,
-          longitude: res.data.results[0].geometry.location.lng,
+        location: {
+          coordinates: [
+            res.data.results[0].geometry.location.lng,
+            res.data.results[0].geometry.location.lat,
+          ],
         },
       });
       if (response.data) {
@@ -81,17 +83,17 @@ export default function PlaneByAirport() {
     if (typeof airport === "undefined") {
       console.log("airport undefined");
     } else {
-      const marker = new mapboxgl.Marker()
+      new mapboxgl.Marker()
         .setLngLat([
-          airport.coordonnees_gps.longitude,
-          airport.coordonnees_gps.latitude,
+          airport.location.coordinates[0],
+          airport.location.coordinates[1],
         ])
         .addTo(map);
 
       map.flyTo({
         center: [
-          airport.coordonnees_gps.longitude,
-          airport.coordonnees_gps.latitude,
+          airport.location.coordinates[0],
+          airport.location.coordinates[1],
         ],
         zoom: 5,
       });
@@ -115,7 +117,7 @@ export default function PlaneByAirport() {
           <div className="popup">
             <div className="popup-content">
               <h1 className="title-form">Modifier l'aéroport</h1>
-              <form onSubmit={(e) => handleSubmit(e,airport._id)}>
+              <form onSubmit={(e) => handleSubmit(e, airport._id)}>
                 <div className="form-group">
                   <label className="form-label">
                     Code IATA :

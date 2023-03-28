@@ -206,19 +206,13 @@ router.get("/api/airport/stats", async (req, res) => {
       collection,
       req.query.capacity
     );
-
-    console.log({
-      avgAirport: avergageAirport[0],
-      avgVol: avgVol[0],
-      currentFlyCompany: currentFlyCompany[0],
-      airportCapacity: airportCapacity,
-      airport: airport,
-    });
+    
     res.json({
       avgAirport: avergageAirport[0],
       avgVol: avgVol[0],
       currentFlyCompany: currentFlyCompany[0],
-      airportCapacity: airportCapacity,
+      airportCapacity,
+      airport,
     });
   } catch (error) {
     console.log(error);
