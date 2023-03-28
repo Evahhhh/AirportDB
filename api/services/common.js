@@ -13,13 +13,16 @@ const findFly = async (db, collectionName, query) => {
   try {
     const collection = db.collection(collectionName);
     const result = await collection
-      .find({ code_IATA: query.code_IATA })
+      .find({
+        vols: {
+          $elemMatch: {
+            [`aeroport_${query.wanted}.code_IATA`]: query.code_IATA,
+          },
+        },
+      })
       .toArray();
-    result[0].vols.filter((vol) => {
-      vol[`aeroport_${query.wanted}`].code_IATA === query.code_IATA;
-    });
-    console.log(result[0].vols);
-    return result[0].vols;
+    console.log(result[0]);
+    return result[0] && result[0].vols;
   } catch (error) {
     console.log("Error services common : findFly : ", error);
     return [];
@@ -90,4 +93,5 @@ module.exports = {
   aggregateDocuments,
   updateDocument,
   findFly,
+  deleteFly,
 };

@@ -1,8 +1,8 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../style/components/form.css";
-import axios from "axios";
 
 export default function NewAirportForm() {
   const [code, setCode] = useState();
@@ -28,8 +28,7 @@ export default function NewAirportForm() {
           latitude: res.data.results[0].geometry.location.lat,
           longitude: res.data.results[0].geometry.location.lng,
         },
-        vols:{
-        },
+        vols: [],
       });
       if (response.data) {
         toast.success("Aéroport ajouté avec succès !");
