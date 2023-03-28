@@ -5,11 +5,15 @@ var router = express.Router();
 const {
   findDocuments,
   insertDocument,
-  updateDocument,
-  deleteDocument,
-  aggregateDocuments,
   findFly,
 } = require("../services/common");
+const {
+  averageAiport,
+  averageFly,
+  airportCapacityGreatherThan,
+  currentFly,
+  airportArround,
+} = require("../services/stats");
 
 router.post("/api/airport", async (req, res) => {
   try {
@@ -41,7 +45,7 @@ router.get("/api/airport", async (req, res) => {
 
 router.get("/api/airport/fly", async (req, res) => {
   try {
-    const documents = await findFly(db, "airport", req.query );
+    const documents = await findFly(db, "airport", req.query);
     console.log("documents : ", documents);
     res.json(documents);
   } catch (err) {
@@ -117,6 +121,56 @@ router.post("/api/airport/fly", async (req, res) => {
 
 router.get("/", async (req, res) => {
   res.send("Bienvenue sur l'api AirportDB");
+});
+
+router.get("/api/airport/stats", async (req, res) => {
+  try {
+    const collection = db.collection("airport");
+    //Trouver la moyenne de latitude et longitude des aéroports du Vietnam
+    const avergageAirport = await averageAiport(collection);
+
+    //Trouver le nombre total de vols au départ d'aéroports français et vietnamiens
+    const avgVol = await averageFly(collection);
+
+    //Trouver les aéroports situés à moins de 100 km d'un aéroport donné
+    const airport = await airportArround(collection, req.query.airportArround);
+
+    //Trouver les vols opérés par une compagnie aérienne donnée pour les aéroports en France et au Vietnam.
+    const currentFlyCompany = await currentFly(collection, req.query.company);
+
+    // Trouver les aéroports avec au moins un vol opéré par un avion ayant une capacité supérieure à un certain nombre
+    const airportCapacity = await airportCapacityGreatherThan(
+      collection,
+      req.query.capacity
+    );
+
+    console.log({
+      avgAirport: avergageAirport[0],
+      avgVol: avgVol[0],
+      currentFlyCompany: currentFlyCompany[0],
+      airportCapacity: airportCapacity,
+      airport: airport,
+    });
+    res.json({
+      avgAirport: avergageAirport[0],
+      avgVol: avgVol[0],
+      currentFlyCompany: currentFlyCompany[0],
+      airportCapacity: airportCapacity,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error });
+  }
+});
+
+router.get("/api/airport/company", async (req, res) => {
+  try {
+    const collection = db.collection("airport");
+    const response = await collection.distinct("vols.avion.compagnie_aerienne");
+    res.json(response);
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 });
 
 module.exports = router;

@@ -22,7 +22,7 @@ export default function Airport_list({ pays }) {
   };
 
   useEffect(() => {
-    const response = axios
+    axios
       .get(`${API_URL}/airport?pays=${pays}`)
       .then((response) => {
         setAllAirport(response.data);
