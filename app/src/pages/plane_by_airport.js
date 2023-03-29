@@ -84,17 +84,25 @@ export default function PlaneByAirport() {
       console.log("airport undefined");
     } else {
       new mapboxgl.Marker()
-        .setLngLat([
-          airport.location.coordinates[0],
-          airport.location.coordinates[1],
-        ])
+        .setLngLat(
+          airport.location ? [
+            airport.location.coordinates[0],
+            airport.location.coordinates[1]
+          ] : [
+            airport.coordonnees_gps.longitude,
+            airport.coordonnees_gps.latitude
+          ])
         .addTo(map);
 
       map.flyTo({
-        center: [
-          airport.location.coordinates[0],
-          airport.location.coordinates[1],
-        ],
+        center: 
+          airport.location ? [
+            airport.location.coordinates[0],
+            airport.location.coordinates[1]
+          ] : [
+            airport.coordonnees_gps.longitude,
+            airport.coordonnees_gps.latitude
+          ],
         zoom: 5,
       });
     }

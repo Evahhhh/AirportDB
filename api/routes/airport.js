@@ -80,6 +80,12 @@ router.post("/api/airport/fly", async (req, res) => {
       capacite,
       compagnie,
     } = req.body;
+    const findFly = await findDocuments(db, 'airport', {
+      "vols.numero_vol": numVol
+    })
+    if(findFly.length > 0) {
+      throw new Error("Numéro de vol existe déjà")
+    }
     const airportDepFind = await findDocuments(db, "airport", {
       code_IATA: airportDep,
     });
