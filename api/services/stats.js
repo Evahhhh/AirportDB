@@ -1,4 +1,5 @@
-const { ObjectId } = require("mongodb");
+const { ObjectId } = require("bson");
+const { findDocuments } = require("./common");
 
 async function averageAiport(collection) {
   return await collection
@@ -37,9 +38,7 @@ async function averageFly(collection) {
 async function airportArround(collection, id) {
   collection.createIndex({ location: "2dsphere" });
   const findAirportArround = await collection
-    .find({
-      _id: new ObjectId(id),
-    })
+    .find({ _id: new ObjectId(id) })
     .toArray();
   return await collection
     .find({
@@ -47,10 +46,15 @@ async function airportArround(collection, id) {
         $near: {
           $geometry: {
             type: "Point",
-            coordinates: [
-              findAirportArround[0].location.coordinates[0],
-              findAirportArround[0].location.coordinates[1],
-            ],
+            coordinates: findAirportArround[0].location
+              ? [
+                  findAirportArround[0].location.coordinates[0],
+                  findAirportArround[0].location.coordinates[1],
+                ]
+              : [
+                  findAirportArround[0].coordonnees_gps.longitude,
+                  findAirportArround[0].coordonnees_gps.latitude,
+                ],
           },
           $maxDistance: 100000, // distance en mètres
         },
@@ -60,7 +64,7 @@ async function airportArround(collection, id) {
 }
 
 async function currentFly(collection, company) {
-  return await collection
+  const data = await collection
     .aggregate([
       {
         $match: {
@@ -83,6 +87,8 @@ async function currentFly(collection, company) {
       },
     ])
     .toArray();
+
+  return Array.from(new Set(data.map(JSON.stringify))).map(JSON.parse);
 }
 
 async function airportCapacityGreatherThan(collection, capacity) {
@@ -93,8 +99,7 @@ async function airportCapacityGreatherThan(collection, capacity) {
       if (parseInt(vol.avion.capacite) > parseInt(capacity)) isGreatherThan++;
     });
   });
-
-  return isGreatherThan;
+  return response;
 }
 
 module.exports = {

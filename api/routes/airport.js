@@ -80,11 +80,11 @@ router.post("/api/airport/fly", async (req, res) => {
       capacite,
       compagnie,
     } = req.body;
-    const findFly = await findDocuments(db, 'airport', {
-      "vols.numero_vol": numVol
-    })
-    if(findFly.length > 0) {
-      throw new Error("Numéro de vol existe déjà")
+    const findFly = await findDocuments(db, "airport", {
+      "vols.numero_vol": numVol,
+    });
+    if (findFly.length > 0) {
+      throw new Error("Numéro de vol existe déjà");
     }
     const airportDepFind = await findDocuments(db, "airport", {
       code_IATA: airportDep,
@@ -202,7 +202,10 @@ router.get("/api/airport/stats", async (req, res) => {
     const avgVol = await averageFly(collection);
 
     //Trouver les aéroports situés à moins de 100 km d'un aéroport donné
-    const airport = await airportArround(collection, req.query.airportArround);
+    let airport;
+    if (req.query.airportArround !== "undefined") {
+      airport = await airportArround(collection, req.query.airportArround);
+    }
 
     //Trouver les vols opérés par une compagnie aérienne donnée pour les aéroports en France et au Vietnam.
     const currentFlyCompany = await currentFly(collection, req.query.company);
@@ -212,11 +215,11 @@ router.get("/api/airport/stats", async (req, res) => {
       collection,
       req.query.capacity
     );
-    
+
     res.json({
       avgAirport: avergageAirport[0],
       avgVol: avgVol[0],
-      currentFlyCompany: currentFlyCompany[0],
+      currentFlyCompany: currentFlyCompany,
       airportCapacity,
       airport,
     });

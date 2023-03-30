@@ -58,8 +58,12 @@ export default function Stats() {
           </select>
           {airportArround && (
             <p>
-              Les aéroports situés à moins de 100 kms de l'aéroport sélectionné :
-              {stats && stats.airport[0].code_IATA}
+              Les aéroports situés à moins de 100 kms de l'aéroport sélectionné
+              :
+              {stats &&
+                stats.airport &&
+                stats.airport[0] &&
+                stats.airport[0].code_IATA}
             </p>
           )}
         </div>
@@ -80,7 +84,11 @@ export default function Stats() {
           {company && (
             <p>
               Les vols opérés par la compagnie {company} pour tous les aéroports
-              : {stats && stats.airport[0].code_IATA}
+              :{" "}
+              {stats &&
+                stats.airport &&
+                stats.airport[0] &&
+                stats.airport[0].code_IATA}
             </p>
             //APPEL
           )}
@@ -101,19 +109,20 @@ export default function Stats() {
           {capacity && (
             <p>
               Les aéroports avec au moins un vol opéré par un avion ayant une
-              capacité supérieure à {capacity} : {stats && stats.airport[0].code_IATA} 
+              capacité supérieure à {capacity} :
+              {stats && stats.airportCapacity.map((el) => el.code_IATA).join(",")}
             </p>
 
             //APPEL
           )}
-        <div className="single-section">
-          <p>Il y a {stats && stats.avgVol.totalVols} vols en tout.</p>
-          <p>
-            La moyenne de latitude et longitude des aéroports du Vietnam :
-            {stats && stats.avgAirport.avgLatitude}
-            {stats && stats.avgAirport.avgLongitude}
-          </p>
-        </div>
+          <div className="single-section">
+            <p>Il y a {stats && stats.avgVol.totalVols} vols en tout.</p>
+            <p>
+              La moyenne de latitude et longitude des aéroports du Vietnam :
+              {stats && stats.avgAirport.avgLatitude}
+              {stats && stats.avgAirport.avgLongitude}
+            </p>
+          </div>
         </div>
       </div>
     </div>
