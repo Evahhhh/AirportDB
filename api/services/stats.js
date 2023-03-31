@@ -40,7 +40,7 @@ async function airportArround(collection, id) {
   const findAirportArround = await collection
     .find({ _id: new ObjectId(id) })
     .toArray();
-  return await collection
+  const data = await collection
     .find({
       location: {
         $near: {
@@ -61,6 +61,8 @@ async function airportArround(collection, id) {
       },
     })
     .toArray();
+
+    return data.filter((el) => el._id.toString() !== id.toString());
 }
 
 async function currentFly(collection, company) {
@@ -92,15 +94,18 @@ async function currentFly(collection, company) {
 }
 
 async function airportCapacityGreatherThan(collection, capacity) {
-  const response = await collection.find().toArray();
-  let isGreatherThan = 0;
-  response.map((res) => {
-    return res.vols.map((vol) => {
-      if (parseInt(vol.avion.capacite) > parseInt(capacity)) isGreatherThan++;
+  const airports = await collection.find().toArray();
+
+  const filteredAirports = airports.filter((airport) => {
+    const hasVolWithGreatherCapacity = airport.vols.some((vol) => {
+      return parseInt(vol.avion.capacite) > parseInt(capacity);
     });
+    return hasVolWithGreatherCapacity;
   });
-  return response;
+
+  return filteredAirports;
 }
+
 
 module.exports = {
   averageAiport,

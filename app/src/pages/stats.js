@@ -33,11 +33,7 @@ export default function Stats() {
     });
   }, []);
   console.log({ stats });
-  // airport => liste des aéroports a moins de 100km de l'aéroport sélectionner
-  // airportCapacty => le nombre de vols qui ont une capacité supérieur à celle rentrée dans le champs
   // avgAirport => la moyenne des coordonnées
-  // avgVol => Le nombre de vol au départ des aéroports
-  // currentFlyCompany => Vol pour l'aéroport mis dans le champs
   return (
     <div className="page">
       <h1 className="center">Statistiques</h1>
@@ -62,8 +58,9 @@ export default function Stats() {
               :
               {stats &&
                 stats.airport &&
-                stats.airport[0] &&
-                stats.airport[0].code_IATA}
+                stats.airport.map((airport) => {
+                  return <li>{airport.code_IATA}</li>;
+                })}
             </p>
           )}
         </div>
@@ -86,11 +83,32 @@ export default function Stats() {
               Les vols opérés par la compagnie {company} pour tous les aéroports
               :{" "}
               {stats &&
-                stats.airport &&
-                stats.airport[0] &&
-                stats.airport[0].code_IATA}
+                stats.currentFlyCompany &&
+                stats.currentFlyCompany.map((fly) => {
+                  return (
+                    <ul class="flight-info">
+                      <li>
+                        <div class="bold"> Vol {fly.numero_vol} </div>
+                        <ul class="departure-info">
+                          <li>
+                            Aéroport de départ : {fly.aeroport_depart.code_IATA}
+                            , {fly.aeroport_depart.nom} en{" "}
+                            {fly.aeroport_depart.pays}
+                          </li>
+                        </ul>
+                        <ul class="arrival-info">
+                          <li>
+                            Aéroport d'arrivée :{" "}
+                            {fly.aeroport_arrivee.code_IATA},{" "}
+                            {fly.aeroport_arrivee.nom} en{" "}
+                            {fly.aeroport_arrivee.pays}
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  );
+                })}
             </p>
-            //APPEL
           )}
         </div>
 
@@ -107,13 +125,15 @@ export default function Stats() {
             }}
           />
           {capacity && (
-            <p>
+            <p class="airport-capacity">
               Les aéroports avec au moins un vol opéré par un avion ayant une
-              capacité supérieure à {capacity} :
-              {stats && stats.airportCapacity.map((el) => el.code_IATA).join(",")}
+              capacité supérieure à {capacity} : 
+              <span class="airport-codes">
+                {stats &&
+                  stats.airportCapacity.map((el) => el.code_IATA).join(",")}
+              </span>
             </p>
 
-            //APPEL
           )}
           <div className="single-section">
             <p>Il y a {stats && stats.avgVol.totalVols} vols en tout.</p>

@@ -31,3 +31,36 @@
 .bold{
     fond-weight : bold;
 }
+
+.flight-info {
+  list-style: none;
+  padding: 0;
+}
+
+.flight-info > li {
+  margin-bottom: 20px;
+}
+
+.departure-info,
+.arrival-info {
+  margin-left: 20px;
+}
+
+.departure-info li:before {
+  content: "- ";
+}
+
+.arrival-info li:before {
+  content: "- ";
+}
+
+.airport-capacity {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.airport-codes {
+  font-weight: normal;
+  font-style: italic;
+}
