@@ -1,76 +1,98 @@
 var newDoc = {
-  code_IATA: "HUE",
-  nom: "Aéroport de Hue",
-  ville: "Hue",
+  code_IATA: "PHU",
+  nom: "Aéroport de Phù Bài",
+  ville: "Phu Bai",
   pays: "Vietnam",
   location: {
     type: "Point",
-    coordinates: [2.547925, 49.009691],
+    coordinates: [
+      107.7003438,
+      16.3979097
+    ]
   },
   vols: [
     {
-      _id: "FH274",
-      numero_vol: "AFJ89",
-      heure_depart: new Date("2023-03-21T10:00:00Z"),
-      heure_arrivee: new Date("2023-03-21T12:30:00Z"),
+      numero_vol: "FET24",
+      heure_depart: "2023-03-31T19:56",
+      heure_arrivee: "2023-04-02T19:56",
       aeroport_depart: {
-        code_IATA: "CDG",
-        nom: "Aéroport Charles de Gaulle",
-        ville: "Paris",
-        pays: "France",
-        location: {
-          type: "Point",
-          coordinates: [2.547925, 49.009691],
-        },
+        code_IATA: "PHU",
+        nom: "Aéroport de Phù Bài",
+        ville: "Phu Bai",
+        pays: "Vietnam"
       },
       aeroport_arrivee: {
         code_IATA: "HUE",
-        nom: "Aéroport Hue",
+        nom: "Aéroport de Hue",
         ville: "Hue",
-        pays: "Vietnam",
-        location: {
-          type: "Point",
-          coordinates: [107.700131, 16.397733],
-        },
+        pays: "Vietnam"
       },
       avion: {
-        modele: "Airbus A380",
-        capacite: 853,
-        compagnie_aerienne: "Vietnam airline",
-      },
+        modele: "Boeing N65",
+        capacite: "450",
+        compagnie_aerienne: "Air France"
+      }
     },
-  ],
-};
+    {
+      numero_vol: "Vol KRKRKR",
+      heure_depart: "2023-03-11T20:58",
+      heure_arrivee: "2023-04-01T19:58",
+      aeroport_depart: {
+        code_IATA: "CDG",
+        nom: "Aéroport de Charles de Gaulle",
+        ville: "Paris",
+        pays: "France"
+      },
+      aeroport_arrivee: {
+        code_IATA: "PHU",
+        nom: "Aéroport de Phù Bài",
+        ville: "Phu Bai",
+        pays: "Vietnam"
+      },
+      avion: {
+        modele: "A34",
+        capacite: "34",
+        compagnie_aerienne: "AirBous"
+      }
+    },
+    {
+      numero_vol: "Vol KRKRKRqsd",
+      heure_depart: "2023-03-11T20:58",
+      heure_arrivee: "2023-04-01T19:58",
+      aeroport_depart: {
+        code_IATA: "CDG",
+        nom: "Aéroport de Charles de Gaulle",
+        ville: "Paris",
+        pays: "France"
+      },
+      aeroport_arrivee: {
+        code_IATA: "PHU",
+        nom : "Aéroport de Phù Bài",
+        ville: "Phu Bai",
+        pays: "Vietnam"
+      },
+      avion: {
+        modele: "A34",
+        capacite: "34",
+        compagnie_aerienne: "AirBous"
+      }
+    }
+  ]
+}
 
 var upDoc = {
-  code_IATA: "ORL",
-  nom: "Aéroport Orly",
+  code_IATA: "LBG",
+  nom: "Aéroport de Paris-Le Bourget",
   ville: "Paris",
   pays: "France",
-  vols: [
-    {
-      numero_vol: "AF123",
-      heure_depart: new Date("2023-03-21T10:00:00Z"),
-      heure_arrivee: new Date("2023-03-21T12:30:00Z"),
-      aeroport_depart: {
-        code_IATA: "CDG",
-        nom: "Aéroport Charles de Gaulle",
-        ville: "Paris",
-        pays: "France",
-      },
-      aeroport_arrivee: {
-        code_IATA: "HUE",
-        nom: "Aéroport Hue",
-        ville: "Hue",
-        pays: "Vietnam",
-      },
-      avion: {
-        modele: "Airbus A380",
-        capacite: 853,
-        compagnie_aerienne: "Vietnam airline",
-      },
-    },
-  ],
-};
+  location: {
+    type: "Point",
+    coordinates: [
+      2.3522219,
+      48.856614
+    ]
+  },
+  vols: []
+}
 
 module.exports = { newDoc, upDoc };
