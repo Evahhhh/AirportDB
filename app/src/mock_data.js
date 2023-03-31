@@ -34,7 +34,7 @@ var newDoc = {
       }
     },
     {
-      numero_vol: "Vol KRKRKR",
+      numero_vol: "AF114",
       heure_depart: "2023-03-11T20:58",
       heure_arrivee: "2023-04-01T19:58",
       aeroport_depart: {
@@ -50,9 +50,9 @@ var newDoc = {
         pays: "Vietnam"
       },
       avion: {
-        modele: "A34",
-        capacite: "34",
-        compagnie_aerienne: "AirBous"
+        modele: "Airbus A380",
+        capacite: "340",
+        compagnie_aerienne: "Air France"
       }
     },
     {
@@ -72,9 +72,9 @@ var newDoc = {
         pays: "Vietnam"
       },
       avion: {
-        modele: "A34",
-        capacite: "34",
-        compagnie_aerienne: "AirBous"
+        modele: "Boeing 737",
+        capacite: "400",
+        compagnie_aerienne: "Vietnam Airlines"
       }
     }
   ]
