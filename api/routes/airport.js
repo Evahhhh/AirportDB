@@ -197,7 +197,6 @@ router.get("/api/airport/stats", async (req, res) => {
     const collection = db.collection("airport");
     //Trouver la moyenne de latitude et longitude des aéroports du Vietnam
     const avergageAirport = await averageAiport(collection);
-
     //Trouver le nombre total de vols au départ d'aéroports français et vietnamiens
     const avgVol = await averageFly(collection);
 
@@ -217,11 +216,11 @@ router.get("/api/airport/stats", async (req, res) => {
     );
 
     res.json({
-      avgAirport: avergageAirport[0],
-      avgVol: avgVol[0],
-      currentFlyCompany: currentFlyCompany,
-      airportCapacity,
-      airport,
+      avgAirport: avergageAirport ?? undefined,
+      avgVol: avgVol[0] ?? undefined,
+      currentFlyCompany: currentFlyCompany ?? undefined,
+      airportCapacity: airportCapacity ?? undefined,
+      airport: airport ?? undefined,
     });
   } catch (error) {
     console.log(error);

@@ -110,17 +110,21 @@ export default function Stats() {
             <p>
               Les aéroports avec au moins un vol opéré par un avion ayant une
               capacité supérieure à {capacity} :
-              {stats && stats.airportCapacity.map((el) => el.code_IATA).join(",")}
+              {stats &&
+                stats.airportCapacity.map((el) => el.code_IATA).join(",")}
             </p>
 
             //APPEL
           )}
           <div className="single-section">
-            <p>Il y a {stats && stats.avgVol.totalVols} vols en tout.</p>
+            <p>
+              Il y a {stats && stats.avgVol && stats.avgVol.totalVols} vols en
+              tout.
+            </p>
             <p>
               La moyenne de latitude et longitude des aéroports du Vietnam :
-              {stats && stats.avgAirport.avgLatitude}
-              {stats && stats.avgAirport.avgLongitude}
+              {stats && stats.avgAirport && stats.avgAirport.avgLatitude}, {" "}
+              {stats && stats.avgAirport && stats.avgAirport.avgLongitude}
             </p>
           </div>
         </div>
