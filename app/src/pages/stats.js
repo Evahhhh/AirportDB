@@ -1,9 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../style/stats.css";
+import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 export default function Stats() {
   const API_URL = "http://localhost:5150/api";
+  const [, setPageIsMounted] = useState(false);
   const [stats, setStats] = useState();
   const [airportArroundList, setAirportAroundList] = useState();
   const [airportArround, setAirportAround] = useState();
@@ -32,8 +35,39 @@ export default function Stats() {
       setCompanyList(response.data);
     });
   }, []);
+
+  useEffect(() => {
+    setPageIsMounted(true);
+    mapboxgl.accessToken =
+      "pk.eyJ1IjoibWFydGgxIiwiYSI6ImNreWJidHk4cTA3NXIycG10a3ZzaDFia3MifQ.XxoFzhzTP0vgPaB1mM4i8g";
+    const map = new mapboxgl.Map({
+      container: "my-map",
+      style: "mapbox://styles/mapbox/streets-v11",
+      center: [42, 3],
+      zoom: 10,
+    });
+
+    if (typeof stats === "undefined") {
+      console.log("stats undefined");
+    } else if (
+      typeof stats.avgAirport.avgLongitude !== "number" ||
+      isNaN(stats.avgAirport.avgLongitude) ||
+      typeof stats.avgAirport.avgLatitude !== "number" ||
+      isNaN(stats.avgAirport.avgLatitude)
+    ) {
+      console.log("Invalid longitude or latitude value");
+    } else {
+      new mapboxgl.Marker()
+        .setLngLat([stats.avgAirport.avgLongitude, stats.avgAirport.avgLatitude])
+        .addTo(map);
+
+      map.flyTo({
+        center: [stats.avgAirport.avgLongitude, stats.avgAirport.avgLatitude],
+        zoom: 5,
+      });
+    }
+  }, [stats]);
   console.log({ stats });
-  // avgAirport => la moyenne des coordonnées
   return (
     <div className="page">
       <h1 className="center">Statistiques</h1>
@@ -127,13 +161,12 @@ export default function Stats() {
           {capacity && (
             <p class="airport-capacity">
               Les aéroports avec au moins un vol opéré par un avion ayant une
-              capacité supérieure à {capacity} : 
+              capacité supérieure à {capacity} :
               <span class="airport-codes">
                 {stats &&
                   stats.airportCapacity.map((el) => el.code_IATA).join(",")}
               </span>
             </p>
-
           )}
           <div className="single-section">
             <p>
@@ -142,9 +175,10 @@ export default function Stats() {
             </p>
             <p>
               La moyenne de latitude et longitude des aéroports du Vietnam :
-              {stats && stats.avgAirport && stats.avgAirport.avgLatitude}, {" "}
+              {stats && stats.avgAirport && stats.avgAirport.avgLatitude},{" "}
               {stats && stats.avgAirport && stats.avgAirport.avgLongitude}
             </p>
+            <div id="my-map" className="center" style={{ height: "50vh", width: "100%" }} />
           </div>
         </div>
       </div>
