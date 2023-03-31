@@ -2,23 +2,21 @@ const { ObjectId } = require("bson");
 const { findDocuments } = require("./common");
 
 async function averageAiport(collection) {
-  return await collection
-    .aggregate([
-      { $match: { pays: "Vietnam" } },
-      {
-        $group: {
-          _id: null,
-          avgLatitude: { $avg: "$location.coordinates[1]" },
-          avgLongitude: { $avg: "$location.coordinates[0]" },
-        },
-      },
-      { $project: { _id: 0, avgLatitude: 1, avgLongitude: 1 } },
-    ])
-    .toArray();
+  const data = await collection.find({ pays: "Vietnam" }).toArray();
+  let avgLatitude = 0;
+  let avgLongitude = 0;
+  data.map((el) => {
+    avgLongitude += el.location.coordinates[0];
+    avgLatitude += el.location.coordinates[1];
+  })
+  return {
+    avgLatitude: avgLatitude / data.length,
+    avgLongitude: avgLongitude / data.length,
+  };
 }
 
 async function averageFly(collection) {
-  return await collection
+  const data = await collection
     .aggregate([
       {
         $match: {
@@ -33,6 +31,7 @@ async function averageFly(collection) {
       { $project: { _id: 0, totalVols: 1 } },
     ])
     .toArray();
+  return data;
 }
 
 async function airportArround(collection, id) {

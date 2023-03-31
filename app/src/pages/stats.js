@@ -136,11 +136,14 @@ export default function Stats() {
 
           )}
           <div className="single-section">
-            <p>Il y a {stats && stats.avgVol.totalVols} vols en tout.</p>
+            <p>
+              Il y a {stats && stats.avgVol && stats.avgVol.totalVols} vols en
+              tout.
+            </p>
             <p>
               La moyenne de latitude et longitude des aéroports du Vietnam :
-              {stats && stats.avgAirport.avgLatitude}
-              {stats && stats.avgAirport.avgLongitude}
+              {stats && stats.avgAirport && stats.avgAirport.avgLatitude}, {" "}
+              {stats && stats.avgAirport && stats.avgAirport.avgLongitude}
             </p>
           </div>
         </div>
