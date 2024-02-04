@@ -10,7 +10,7 @@ export default function Airport_list({ pays }) {
   const [allAirport, setAllAirport] = useState();
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
-  const API_URL="http://localhost:5150/api"
+  const API_URL="https://airport-db-xd8l.vercel.app/api"
 
   const handlePage = (newPage) => {
     setPage(newPage);

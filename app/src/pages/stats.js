@@ -5,7 +5,7 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 export default function Stats() {
-  const API_URL = "http://localhost:5150/api";
+  const API_URL = "https://airport-db-xd8l.vercel.app/api";
   const [, setPageIsMounted] = useState(false);
   const [stats, setStats] = useState();
   const [airportArroundList, setAirportAroundList] = useState();

@@ -12,7 +12,7 @@ export default function CardFly({
   wanted,
   airport_id,
 }) {
-  const API_URL = "http://localhost:5150/api";
+  const API_URL = "https://airport-db-xd8l.vercel.app/api";
   const [showPopup, setShowPopup] = useState(false);
 
   const [numVol, setNumVol] = useState(fly.numero_vol);

@@ -11,7 +11,7 @@ export default function PlaneByAirport() {
   const [, setPageIsMounted] = useState(false);
   const [airport, setAirport] = useState();
   const { id } = useParams();
-  const API_URL = "http://localhost:5150/api";
+  const API_URL = "https://airport-db-xd8l.vercel.app/api";
   const API_MAPS = "AIzaSyDszeQXLhCjjz14enAlH0rkx41Ry41XvsQ";
   const [showPopup, setShowPopup] = useState(false);
   const [code, setCode] = useState();

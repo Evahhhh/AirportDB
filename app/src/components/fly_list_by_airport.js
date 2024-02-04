@@ -6,7 +6,7 @@ import CardFly from "./cardFly";
 import "../style/components/fly_list_by_airport.css";
 
 export default function FlyListByAirport({ airport_code, wanted, airport_id }) {
-  const API_URL = "http://localhost:5150/api";
+  const API_URL = "https://airport-db-xd8l.vercel.app/api";
   const [allFly, setAllFly] = useState();
 
   useEffect(() => {

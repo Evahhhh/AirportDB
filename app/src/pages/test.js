@@ -5,7 +5,7 @@ import { newDoc, upDoc } from "../mock_data";
 export default function Test() {
   const [allDocs, setAllDocs] = useState();
   const [insertedDoc, setInsertedDoc] = useState();
-  const API_URL = "http://localhost:5150/api";
+  const API_URL = "https://airport-db-xd8l.vercel.app/api";
 
   const getDocuments = async () => {
     const response = await axios.get(`${API_URL}/documents`);

@@ -9,7 +9,7 @@ export default function NewAirportForm() {
   const [nom, setNom] = useState();
   const [ville, setVille] = useState();
   const [pays, setPays] = useState();
-  const API_URL = "http://localhost:5150/api";
+  const API_URL = "https://airport-db-xd8l.vercel.app/api";
   const API_MAPS = "AIzaSyDszeQXLhCjjz14enAlH0rkx41Ry41XvsQ";
 
   const handleSubmit = async (event) => {

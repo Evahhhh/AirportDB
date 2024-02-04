@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../style/components/form.css";
 //formulaire
 export default function NewFlyForm({ insertDocument }) {
-  const API_URL = "http://localhost:5150/api";
+  const API_URL = "https://airport-db-xd8l.vercel.app/api";
   const [numVol, setNumVol] = useState("");
   const [heureDep, setHeureDep] = useState();
   const [heureArr, setHeureArr] = useState();
