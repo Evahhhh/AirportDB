@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 // Set up default mongoose connection
-const url = 'mongodb://localhost:27017/airdb';
+const url = 'mongodb+srv://evah:evah@airdb.8d1zxtg.mongodb.net/?retryWrites=true&w=majority';
 mongoose
   .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connect to MongoDB"))
